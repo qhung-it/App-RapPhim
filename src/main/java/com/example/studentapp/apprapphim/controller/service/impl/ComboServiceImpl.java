@@ -1,4 +1,4 @@
 package com.example.studentapp.apprapphim.controller.service.impl;
 
-public class KhachHangServiceImpl {
+public class ComboServiceImpl {
 }
