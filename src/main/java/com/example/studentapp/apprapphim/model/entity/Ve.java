@@ -101,4 +101,17 @@ public class Ve {
     public void setGhe(Ghe ghe) {
         this.ghe = ghe;
     }
+
+    public boolean kiemTraVe() {
+        return trangThai == TrangThaiVe.ChuaSuDung;
+    }
+
+    public boolean suDungVe() {
+        if (trangThai != TrangThaiVe.ChuaSuDung) {
+            return false;
+        }
+
+        trangThai = TrangThaiVe.DaSuDung;
+        return true;
+    }
 }

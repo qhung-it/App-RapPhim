@@ -23,12 +23,8 @@ public class KhuyenMai {
     @Column(name = "moTa", length = 255)
     private String moTa;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "loaiGiam", nullable = false, length = 30)
-    private LoaiGiam loaiGiam = LoaiGiam.PhanTram;
-
-    @Column(name = "giaTriGiam", precision = 12, scale = 2, nullable = false)
-    private BigDecimal giaTriGiam;
+    @Column(name = "phanTramGiam", precision = 12, scale = 2, nullable = false)
+    private BigDecimal phanTramGiam;
 
     @Column(name = "ngayBatDau", nullable = false)
     private LocalDate ngayBatDau;
@@ -70,20 +66,12 @@ public class KhuyenMai {
         this.moTa = moTa;
     }
 
-    public LoaiGiam getLoaiGiam() {
-        return loaiGiam;
+    public BigDecimal getPhanTramGiam() {
+        return phanTramGiam;
     }
 
-    public void setLoaiGiam(LoaiGiam loaiGiam) {
-        this.loaiGiam = loaiGiam;
-    }
-
-    public BigDecimal getGiaTriGiam() {
-        return giaTriGiam;
-    }
-
-    public void setGiaTriGiam(BigDecimal giaTriGiam) {
-        this.giaTriGiam = giaTriGiam;
+    public void setPhanTramGiam(BigDecimal phanTramGiam) {
+        this.phanTramGiam = phanTramGiam;
     }
 
     public LocalDate getNgayBatDau() {
@@ -116,5 +104,20 @@ public class KhuyenMai {
 
     public void setDanhSachDonDatVe(List<DonDatVe> danhSachDonDatVe) {
         this.danhSachDonDatVe = danhSachDonDatVe;
+    }
+
+    public BigDecimal tinhTienGiam(BigDecimal tongTien) {
+        if (phanTramGiam == null
+                || phanTramGiam.compareTo(BigDecimal.ZERO) <= 0
+                || tongTien == null
+                || tongTien.compareTo(BigDecimal.ZERO) <= 0) {
+            return BigDecimal.ZERO;
+        }
+
+        BigDecimal tienGiam = tongTien
+                .multiply(phanTramGiam)
+                .divide(BigDecimal.valueOf(100));
+
+        return tienGiam.min(tongTien);
     }
 }

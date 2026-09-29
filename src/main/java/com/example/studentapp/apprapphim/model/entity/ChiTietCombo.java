@@ -80,4 +80,9 @@ public class ChiTietCombo {
     public void setCombo(Combo combo) {
         this.combo = combo;
     }
+
+    public BigDecimal tinhThanhTien() {
+        thanhTien = donGia.multiply(BigDecimal.valueOf(soLuong));
+        return thanhTien;
+    }
 }

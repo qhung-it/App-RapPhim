@@ -152,4 +152,66 @@ public class DonDatVe {
     public void setThanhToan(ThanhToan thanhToan) {
         this.thanhToan = thanhToan;
     }
+
+    public boolean themVe(Ve ve) {
+        if (ve == null || danhSachVe.contains(ve)) {
+            return false;
+        }
+
+        danhSachVe.add(ve);
+        ve.setDonDatVe(this);
+
+        return true;
+    }
+
+    public boolean xoaVe(Ve ve){
+        if (ve == null || !danhSachVe.contains(ve)) {
+            return false;
+        }
+
+        danhSachVe.remove(ve);
+        ve.setDonDatVe(null);
+
+        return true;
+    }
+
+    public boolean themCombo(ChiTietCombo chiTietCombo) {
+        if (chiTietCombo == null || danhSachCombo.contains(chiTietCombo)) {
+            return false;
+        }
+
+        danhSachCombo.add(chiTietCombo);
+        chiTietCombo.setDonDatVe(this);
+
+        return true;
+    }
+
+    public BigDecimal tinhTongTien() {
+        BigDecimal tongTienVe = danhSachVe.stream()
+                .map(Ve::getGiaVe)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal tongTienCombo = danhSachCombo.stream()
+                .map(ChiTietCombo::tinhThanhTien)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal tienGiamApDung =
+                tienGiam != null ? tienGiam : BigDecimal.ZERO;
+
+        tongTien = tongTienVe
+                .add(tongTienCombo)
+                .subtract(tienGiamApDung);
+
+        return tongTien;
+    }
+
+    public boolean huyDon() {
+        if (trangThai == TrangThaiDon.DaHuy
+                || trangThai == TrangThaiDon.DaThanhToan) {
+            return false;
+        }
+
+        trangThai = TrangThaiDon.DaHuy;
+        return true;
+    }
 }
