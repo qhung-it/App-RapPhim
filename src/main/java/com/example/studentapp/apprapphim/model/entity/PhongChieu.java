@@ -21,6 +21,9 @@ public class PhongChieu {
     @Column(name = "loaiPhong", nullable = false, length = 50)
     private LoaiPhong loaiPhong = LoaiPhong.THUONG;
 
+    @Column(name = "soLuongGhe", nullable = false)
+    private int soLuongGhe;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "trangThai", nullable = false, length = 30)
     private TrangThaiPhongChieu trangThai = TrangThaiPhongChieu.HoatDong;
@@ -64,6 +67,14 @@ public class PhongChieu {
 
     public void setLoaiPhong(LoaiPhong loaiPhong) {
         this.loaiPhong = loaiPhong;
+    }
+
+    public int getSoLuongGhe() {
+        return soLuongGhe;
+    }
+
+    public void setSoLuongGhe(int soLuongGhe) {
+        this.soLuongGhe = soLuongGhe;
     }
 
     public TrangThaiPhongChieu getTrangThai() {

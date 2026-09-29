@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Ghe")
-public class Ghe {
+public class  Ghe {
 
     @Id
     @Column(name = "maGhe", length = 20)

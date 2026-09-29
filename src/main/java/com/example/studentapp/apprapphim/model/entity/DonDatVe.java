@@ -188,21 +188,23 @@ public class DonDatVe {
 
     public BigDecimal tinhTongTien() {
         BigDecimal tongTienVe = danhSachVe.stream()
-                .map(Ve::getGiaVe)
+                .map(Ve::tinhGiaVe)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         BigDecimal tongTienCombo = danhSachCombo.stream()
                 .map(ChiTietCombo::tinhThanhTien)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+        tongTien = tongTienVe.add(tongTienCombo);
+
+        return tongTien;
+    }
+
+    public BigDecimal tinhTongTienSauGiam() {
         BigDecimal tienGiamApDung =
                 tienGiam != null ? tienGiam : BigDecimal.ZERO;
 
-        tongTien = tongTienVe
-                .add(tongTienCombo)
-                .subtract(tienGiamApDung);
-
-        return tongTien;
+        return tinhTongTien().subtract(tienGiamApDung);
     }
 
     public boolean huyDon() {

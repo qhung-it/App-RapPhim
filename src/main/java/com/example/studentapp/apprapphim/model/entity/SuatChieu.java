@@ -26,8 +26,8 @@ public class SuatChieu {
     @Column(name = "gioKetThuc", nullable = false)
     private LocalTime gioKetThuc;
 
-    @Column(name = "giaVe", precision = 12, scale = 2, nullable = false)
-    private BigDecimal giaVe;
+    @Column(name = "giaSuat", precision = 12, scale = 2, nullable = false)
+    private BigDecimal giaSuat;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "trangThai", nullable = false, length = 30)
@@ -79,12 +79,12 @@ public class SuatChieu {
         this.gioKetThuc = gioKetThuc;
     }
 
-    public BigDecimal getGiaVe() {
-        return giaVe;
+    public BigDecimal getGiaSuat() {
+        return giaSuat;
     }
 
-    public void setGiaVe(BigDecimal giaVe) {
-        this.giaVe = giaVe;
+    public void setGiaSuat(BigDecimal giaSuat) {
+        this.giaSuat = giaSuat;
     }
 
     public TrangThaiSuatChieu getTrangThai() {
