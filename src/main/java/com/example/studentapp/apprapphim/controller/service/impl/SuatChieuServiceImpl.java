@@ -12,7 +12,9 @@ import com.example.studentapp.apprapphim.model.entity.SuatChieu;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SuatChieuServiceImpl implements SuatChieuService {
 
@@ -107,15 +109,17 @@ public class SuatChieuServiceImpl implements SuatChieuService {
         SuatChieu s = suatChieuDAO.findById(maSuat);
         if (s == null || s.getPhongChieu() == null) return List.of();
 
+        Set<String> gheDaDat = new HashSet<>(veDAO.findMaGheDaDat(maSuat));
         return gheDAO.findByPhongChieu(s.getPhongChieu().getMaPhong()).stream()
-                .filter(g -> !veDAO.existsBySuatChieuAndGhe(maSuat, g.getMaGhe()))
+                .filter(g -> !gheDaDat.contains(g.getMaGhe()))
                 .toList();
     }
 
     @Override
     public boolean kiemTraGheTrong(String maSuat, List<String> danhSachMaGhe) {
         if (maSuat == null || danhSachMaGhe == null || danhSachMaGhe.isEmpty()) return false;
-        return danhSachMaGhe.stream().allMatch(maGhe -> !veDAO.existsBySuatChieuAndGhe(maSuat, maGhe));
+        Set<String> gheDaDat = new HashSet<>(veDAO.findMaGheDaDat(maSuat));
+        return danhSachMaGhe.stream().noneMatch(gheDaDat::contains);
     }
 
     @Override

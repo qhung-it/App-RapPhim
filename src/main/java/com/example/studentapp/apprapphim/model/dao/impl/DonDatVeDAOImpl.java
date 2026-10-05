@@ -10,19 +10,6 @@ import java.util.List;
 
 public class DonDatVeDAOImpl implements DonDatVeDAO {
 
-    private static final String DETAIL_FETCH = """
-            SELECT DISTINCT d FROM DonDatVe d
-            LEFT JOIN FETCH d.khachHang
-            LEFT JOIN FETCH d.nhanVien
-            LEFT JOIN FETCH d.khuyenMai
-            LEFT JOIN FETCH d.thanhToan
-            LEFT JOIN FETCH d.danhSachVe v
-            LEFT JOIN FETCH v.suatChieu
-            LEFT JOIN FETCH v.ghe
-            LEFT JOIN FETCH d.danhSachCombo c
-            LEFT JOIN FETCH c.combo
-            """;
-
     @Override
     public DonDatVe findById(String maDon) {
         if (maDon == null || maDon.isBlank()) return null;
@@ -76,6 +63,10 @@ public class DonDatVeDAOImpl implements DonDatVeDAO {
         return JpaDaoSupport.execute(em ->
                 em.createQuery("""
                         SELECT d FROM DonDatVe d
+                        LEFT JOIN FETCH d.khachHang
+                        LEFT JOIN FETCH d.nhanVien
+                        LEFT JOIN FETCH d.khuyenMai
+                        LEFT JOIN FETCH d.thanhToan
                         WHERE d.khachHang.maKH = :maKH
                         ORDER BY d.ngayDat DESC
                         """, DonDatVe.class)
@@ -89,6 +80,10 @@ public class DonDatVeDAOImpl implements DonDatVeDAO {
         return JpaDaoSupport.execute(em ->
                 em.createQuery("""
                         SELECT d FROM DonDatVe d
+                        LEFT JOIN FETCH d.khachHang
+                        LEFT JOIN FETCH d.nhanVien
+                        LEFT JOIN FETCH d.khuyenMai
+                        LEFT JOIN FETCH d.thanhToan
                         WHERE d.nhanVien.maNV = :maNV
                         ORDER BY d.ngayDat DESC
                         """, DonDatVe.class)

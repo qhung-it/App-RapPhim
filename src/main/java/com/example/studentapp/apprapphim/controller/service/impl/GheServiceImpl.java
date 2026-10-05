@@ -8,7 +8,9 @@ import com.example.studentapp.apprapphim.model.dao.impl.VeDAOImpl;
 import com.example.studentapp.apprapphim.model.dao.SuatChieuDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.SuatChieuDAOImpl;
 import com.example.studentapp.apprapphim.model.entity.Ghe;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GheServiceImpl implements GheService {
 
@@ -67,8 +69,9 @@ public class GheServiceImpl implements GheService {
         var suatChieu = suatChieuDAO.findById(maSuat);
         if (suatChieu == null || suatChieu.getPhongChieu() == null) return List.of();
         List<Ghe> ghePhong = gheDAO.findByPhongChieu(suatChieu.getPhongChieu().getMaPhong());
+        Set<String> gheDaDat = new HashSet<>(veDAO.findMaGheDaDat(maSuat));
         return ghePhong.stream()
-                .filter(g -> !veDAO.existsBySuatChieuAndGhe(maSuat, g.getMaGhe()))
+                .filter(g -> !gheDaDat.contains(g.getMaGhe()))
                 .toList();
     }
 
@@ -81,6 +84,7 @@ public class GheServiceImpl implements GheService {
 
     @Override
     public boolean kiemTraGheTrong(String maSuat, String maGhe) {
-        return !veDAO.existsBySuatChieuAndGhe(maSuat, maGhe);
+        if (maSuat == null || maSuat.isBlank() || maGhe == null || maGhe.isBlank()) return false;
+        return !veDAO.findMaGheDaDat(maSuat).contains(maGhe);
     }
 }

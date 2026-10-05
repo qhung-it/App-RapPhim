@@ -17,7 +17,7 @@ public interface KhachHangService {
 
     boolean xacThucOTP(String email, String otp);
 
-    boolean datLaiMatKhau(String email, String matKhauMoi);
+    boolean datLaiMatKhau(String email, String otp, String matKhauMoi);
 
     KhachHang timTheoMa(String maKH);
 

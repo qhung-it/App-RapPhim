@@ -3,7 +3,7 @@ package com.example.studentapp.apprapphim.controller.service.impl;
 import com.example.studentapp.apprapphim.controller.service.interf.DonDatVeService;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiDon;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiThanhToan;
-import com.example.studentapp.apprapphim.model.Enum.TrangThaiVe;
+import com.example.studentapp.apprapphim.model.Enum.TrangThaiSuatChieu;
 import com.example.studentapp.apprapphim.model.dao.*;
 import com.example.studentapp.apprapphim.model.dao.impl.*;
 import com.example.studentapp.apprapphim.model.entity.*;
@@ -98,7 +98,7 @@ public class DonDatVeServiceImpl implements DonDatVeService {
 
     @Override
     public boolean themVe(String maDon, Ve ve) {
-        if (ve == null || ve.getSuatChieu() == null || ve.getGhe() == null) return false;
+        if (!hopLeVe(ve)) return false;
 
         try {
             return JpaDaoSupport.executeInTransaction(em -> {
@@ -121,7 +121,7 @@ public class DonDatVeServiceImpl implements DonDatVeService {
                 ve.setDonDatVe(don);
                 if (!don.themVe(ve)) return false;
 
-                don.tinhTongTien();
+                capNhatTongTienVaGiam(don);
                 donDAO.save(don);
                 return true;
             });
@@ -142,21 +142,34 @@ public class DonDatVeServiceImpl implements DonDatVeService {
 
                 Set<String> gheDaChon = new HashSet<>();
                 Set<String> maVeDaChon = new HashSet<>();
+                java.util.Map<String, List<String>> gheTheoSuat = new java.util.HashMap<>();
 
                 for (Ve ve : danhSachVe) {
-                    if (ve == null || ve.getSuatChieu() == null || ve.getGhe() == null) return false;
+                    if (!hopLeVe(ve)) return false;
 
-                    String key = ve.getSuatChieu().getMaSuat() + "|" + ve.getGhe().getMaGhe();
-                    if (!gheDaChon.add(key)
-                            || veDAO.existsBySuatChieuAndGhe(
-                            ve.getSuatChieu().getMaSuat(), ve.getGhe().getMaGhe())) {
+                    String maSuat = ve.getSuatChieu().getMaSuat();
+                    String maGhe = ve.getGhe().getMaGhe();
+                    String key = maSuat + "|" + maGhe;
+
+                    if (!gheDaChon.add(key)) {
                         return false;
                     }
+
+                    gheTheoSuat.computeIfAbsent(maSuat, k -> new java.util.ArrayList<>())
+                            .add(maGhe);
 
                     if (ve.getMaVe() == null || ve.getMaVe().isBlank()) {
                         ve.setMaVe("VE-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
                     }
-                    if (!maVeDaChon.add(ve.getMaVe()) || veDAO.findById(ve.getMaVe()) != null) {
+
+                    if (!maVeDaChon.add(ve.getMaVe())) {
+                        return false;
+                    }
+                }
+
+                // Thay N query (mỗi vé một query) bằng tối đa một query cho mỗi suất chiếu.
+                for (var entry : gheTheoSuat.entrySet()) {
+                    if (!veDAO.findBySuatChieuAndGhe(entry.getKey(), entry.getValue()).isEmpty()) {
                         return false;
                     }
                 }
@@ -165,7 +178,7 @@ public class DonDatVeServiceImpl implements DonDatVeService {
                     if (!don.themVe(ve)) return false;
                 }
 
-                don.tinhTongTien();
+                capNhatTongTienVaGiam(don);
                 donDAO.save(don);
                 return true;
             });
@@ -186,7 +199,7 @@ public class DonDatVeServiceImpl implements DonDatVeService {
             if (target == null) return false;
 
             don.xoaVe(target);
-            don.tinhTongTien();
+            capNhatTongTienVaGiam(don);
             donDAO.save(don);
             return true;
         });
@@ -218,7 +231,7 @@ public class DonDatVeServiceImpl implements DonDatVeService {
                 detail.tinhThanhTien();
             }
 
-            don.tinhTongTien();
+            capNhatTongTienVaGiam(don);
             donDAO.save(don);
             return true;
         });
@@ -241,7 +254,7 @@ public class DonDatVeServiceImpl implements DonDatVeService {
             detail.setSoLuong(soLuong);
             detail.setDonGia(combo.getGia());
             detail.tinhThanhTien();
-            don.tinhTongTien();
+            capNhatTongTienVaGiam(don);
             donDAO.save(don);
             return true;
         });
@@ -261,7 +274,7 @@ public class DonDatVeServiceImpl implements DonDatVeService {
 
             don.getDanhSachCombo().remove(detail);
             detail.setDonDatVe(null);
-            don.tinhTongTien();
+            capNhatTongTienVaGiam(don);
             donDAO.save(don);
             return true;
         });
@@ -278,9 +291,10 @@ public class DonDatVeServiceImpl implements DonDatVeService {
         DonDatVe don = donDAO.findById(maDon);
         if (don == null || don.getNgayDat() == null) return null;
 
+        BigDecimal tongTien = don.tinhTongTien();
         return khuyenMaiDAO.findDangApDung(don.getNgayDat().toLocalDate()).stream()
-                .max((a, b) -> a.tinhTienGiam(don.tinhTongTien())
-                        .compareTo(b.tinhTienGiam(don.tinhTongTien())))
+                .max((a, b) -> a.tinhTienGiam(tongTien)
+                        .compareTo(b.tinhTienGiam(tongTien)))
                 .orElse(null);
     }
 
@@ -297,9 +311,8 @@ public class DonDatVeServiceImpl implements DonDatVeService {
                 return false;
             }
 
-            don.tinhTongTien();
             don.setKhuyenMai(km);
-            don.setTienGiam(km.tinhTienGiam(don.getTongTien()));
+            capNhatTongTienVaGiam(don);
             donDAO.save(don);
             return true;
         });
@@ -311,10 +324,12 @@ public class DonDatVeServiceImpl implements DonDatVeService {
             DonDatVe don = donDAO.findById(maDon);
             if (don == null || !don.huyDon()) return false;
 
-            for (Ve ve : don.getDanhSachVe()) {
-                if (ve.getTrangThai() == TrangThaiVe.ChuaSuDung) {
-                    ve.setTrangThai(TrangThaiVe.DaHuy);
-                }
+            // Entity hiện tại đang có unique constraint (maSuat, maGhe).
+            // Vì vậy, để ghế của đơn đã hủy được bán lại mà không sửa Entity/DB schema,
+            // các vé chưa sử dụng được loại khỏi đơn. orphanRemoval sẽ xóa bản ghi Vé.
+            List<Ve> veCanXoa = new java.util.ArrayList<>(don.getDanhSachVe());
+            for (Ve ve : veCanXoa) {
+                don.xoaVe(ve);
             }
 
             // Nếu đang có giao dịch thanh toán chờ xử lý thì chuyển sang thất bại
@@ -328,6 +343,67 @@ public class DonDatVeServiceImpl implements DonDatVeService {
             donDAO.save(don);
             return true;
         });
+    }
+
+
+    private boolean hopLeVe(Ve ve) {
+        if (ve == null
+                || ve.getSuatChieu() == null
+                || ve.getGhe() == null
+                || ve.getGiaVe() == null
+                || ve.getGiaVe().signum() < 0) {
+            return false;
+        }
+
+        SuatChieu suat = ve.getSuatChieu();
+
+        if (suat.getNgayChieu() == null
+                || suat.getGioBatDau() == null
+                || suat.getGioKetThuc() == null
+                || suat.getPhongChieu() == null
+                || suat.getPhongChieu().getMaPhong() == null
+                || ve.getGhe().getPhongChieu() == null
+                || ve.getGhe().getPhongChieu().getMaPhong() == null) {
+            return false;
+        }
+
+        if (suat.getTrangThai() == TrangThaiSuatChieu.Huy
+                || suat.getTrangThai() == TrangThaiSuatChieu.DaChieu) {
+            return false;
+        }
+
+        if (!suat.getGioBatDau().isBefore(suat.getGioKetThuc())) {
+            return false;
+        }
+
+        if (!suat.getPhongChieu().getMaPhong()
+                .equals(ve.getGhe().getPhongChieu().getMaPhong())) {
+            return false;
+        }
+
+        // Không cho đặt một suất đã bắt đầu.
+        LocalDateTime start = LocalDateTime.of(
+                suat.getNgayChieu(), suat.getGioBatDau());
+        return LocalDateTime.now().isBefore(start);
+    }
+
+    /**
+     * Tính lại tổng tiền và tiền giảm sau mỗi thay đổi vé/combo.
+     * Giữ cùng một nguồn dữ liệu để tránh tiền giảm bị "đóng băng".
+     */
+    private void capNhatTongTienVaGiam(DonDatVe don) {
+        BigDecimal tongTien = don.tinhTongTien();
+
+        if (don.getKhuyenMai() == null) {
+            don.setTienGiam(BigDecimal.ZERO);
+            return;
+        }
+
+        BigDecimal tienGiam = don.getKhuyenMai().tinhTienGiam(tongTien);
+        if (tienGiam.compareTo(tongTien) > 0) {
+            tienGiam = tongTien;
+        }
+        don.setTienGiam(tienGiam);
     }
 
     @Override

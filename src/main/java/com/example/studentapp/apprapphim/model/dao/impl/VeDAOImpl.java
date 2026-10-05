@@ -92,6 +92,21 @@ public class VeDAOImpl implements VeDAO {
                         .getResultList());
     }
 
+
+    @Override
+    public List<String> findMaGheDaDat(String maSuat) {
+        if (maSuat == null || maSuat.isBlank()) return List.of();
+        return JpaDaoSupport.execute(em ->
+                em.createQuery("""
+                        SELECT v.ghe.maGhe
+                        FROM Ve v
+                        WHERE v.suatChieu.maSuat = :maSuat
+                          AND v.trangThai <> com.example.studentapp.apprapphim.model.Enum.TrangThaiVe.DaHuy
+                        """, String.class)
+                        .setParameter("maSuat", maSuat)
+                        .getResultList());
+    }
+
     @Override
     public boolean existsBySuatChieuAndGhe(String maSuat, String maGhe) {
         if (maSuat == null || maSuat.isBlank() || maGhe == null || maGhe.isBlank()) return false;
@@ -100,6 +115,7 @@ public class VeDAOImpl implements VeDAO {
                         SELECT COUNT(v) FROM Ve v
                         WHERE v.suatChieu.maSuat = :maSuat
                           AND v.ghe.maGhe = :maGhe
+                          AND v.trangThai <> com.example.studentapp.apprapphim.model.Enum.TrangThaiVe.DaHuy
                         """, Long.class)
                         .setParameter("maSuat", maSuat)
                         .setParameter("maGhe", maGhe)
@@ -114,6 +130,7 @@ public class VeDAOImpl implements VeDAO {
                         SELECT v FROM Ve v
                         WHERE v.suatChieu.maSuat = :maSuat
                           AND v.ghe.maGhe IN :maGhe
+                          AND v.trangThai <> com.example.studentapp.apprapphim.model.Enum.TrangThaiVe.DaHuy
                         """, Ve.class)
                         .setParameter("maSuat", maSuat)
                         .setParameter("maGhe", danhSachMaGhe)
