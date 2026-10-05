@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi" class="theme-customer">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hệ thống rạp chiếu phim - CNPM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stylecnm.css">
+</head>
+<body>
+
+<div class="dev-role-switcher" id="demo">
+  <button class="demo-toggle" id="demo-toggle" aria-expanded="false" aria-controls="demo-menu">⚙ Demo</button>
+  <div class="demo-menu" id="demo-menu">
+    <button class="role-btn active" data-role="customer">Khách hàng</button>
+    <button class="role-btn" data-role="staff">Nhân viên POS</button>
+    <button class="role-btn" data-role="admin">Quản trị</button>
+  </div>
+</div>
+
+<div id="view-customer" class="role-view active">
+  <header class="cinematic-nav">
+    <a href="#top" class="nav-brand"><span class="logo-mark">♛</span><span>VIE<span class="gold-text">CENT</span></span></a>
+    <nav class="nav-links" aria-label="Điều hướng chính">
+      <a href="#top" class="nav-link active">Trang chủ</a>
+      <a href="#movies" class="nav-link">Phim</a>
+      <a href="#showtimes" class="nav-link">Lịch chiếu</a>
+      <a href="#cinemas" class="nav-link">Rạp</a>
+      <a href="#promos" class="nav-link">Ưu đãi</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="search-box">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" id="search" placeholder="Tên phim, đạo diễn, diễn viên..." aria-label="Tìm phim">
+      </div>
+      <div class="user-avatar"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Tài khoản"></div>
+    </div>
+  </header>
+
+  <section class="hero-cinematic" id="top">
+    <div class="hero-backdrop" id="hero-backdrop"></div>
+    <div class="hero-gradient-overlay"></div>
+    <div class="hero-content" id="hero-content">
+      <div class="hero-tag"><span class="badge-gold">PHIM NỔI BẬT</span><span id="hero-fmt"></span></div>
+      <h1 class="hero-title" id="hero-title"></h1>
+      <p class="hero-subtitle" id="hero-subtitle"></p>
+      <div class="hero-metadata" id="hero-meta"></div>
+      <p class="hero-description" id="hero-desc"></p>
+      <div class="hero-actions">
+        <button class="btn-primary-gold" id="hero-book">Đặt vé ngay</button>
+        <button class="btn-glass" id="hero-trailer">▶ Xem trailer</button>
+        <button class="btn-glass" id="hero-detail">Xem chi tiết</button>
+      </div>
+      <div class="hero-next" id="hero-next"></div>
+    </div>
+    <div class="hero-dots" id="hero-dots"></div>
+  </section>
+
+  <section class="section-container" id="movies">
+    <div class="section-header">
+      <div><h2 class="section-title">Phim</h2><p class="section-sub" id="movie-count"></p></div>
+      <div class="filter-pills" id="filters" role="group" aria-label="Lọc phim">
+        <button class="pill active" data-f="all">Tất cả</button>
+        <button class="pill" data-f="now">Đang chiếu</button>
+        <button class="pill" data-f="soon">Sắp chiếu</button>
+        <button class="pill" data-f="IMAX">IMAX</button>
+        <button class="pill" data-f="4DX">4DX</button>
+        <button class="pill" data-f="2D">2D</button>
+        <button class="pill" data-f="3D">3D</button>
+      </div>
+    </div>
+    <div class="movie-grid" id="movie-grid"></div>
+    <div class="empty-state" id="empty-state" hidden>
+      <div class="empty-icon">⌕</div>
+      <h3>Không tìm thấy phim</h3>
+      <p>Thử tìm theo tên phim, thể loại hoặc đạo diễn.</p>
+      <button class="btn-glass" id="clear-search">Xóa bộ lọc</button>
+    </div>
+  </section>
+
+  <section class="section-container alt" id="showtimes">
+    <div class="section-header"><div><h2 class="section-title">Lịch chiếu</h2><p class="section-sub">Chọn ngày và rạp để xem suất chiếu</p></div></div>
+    <div class="st-controls">
+      <div class="filter-pills" id="st-dates" role="group" aria-label="Ngày"></div>
+      <div class="filter-pills" id="st-cinemas" role="group" aria-label="Rạp"></div>
+    </div>
+    <div class="st-list" id="st-list"></div>
+  </section>
+
+  <section class="section-container" id="cinemas">
+    <div class="section-header"><div><h2 class="section-title">Hệ thống rạp</h2><p class="section-sub">Ba cụm rạp tại TP. Hồ Chí Minh</p></div></div>
+    <div class="cinema-grid" id="cinema-grid"></div>
+  </section>
+
+  <section class="section-container alt" id="promos">
+    <div class="section-header"><div><h2 class="section-title">Ưu đãi</h2><p class="section-sub">Bấm vào thẻ để sao chép mã, dùng ở bước Ưu đãi khi đặt vé</p></div></div>
+    <div class="promo-grid" id="promo-grid"></div>
+  </section>
+
+  <footer class="site-footer">© 2026 HoangViet · Hotline 08 14149 579 · Giờ mở cửa 08:00 – 23:30</footer>
+
+  <div id="detail" class="detail-backdrop" hidden role="dialog" aria-modal="true" aria-label="Chi tiết phim"></div>
+
+  <!-- POPUP ĐẶT VÉ -->
+  <div id="booking-modal" class="booking-modal-backdrop" role="dialog" aria-modal="true" aria-label="Đặt vé">
+    <div class="booking-modal-container">
+      <div class="journey-stepper" id="stepper">
+        <div class="step-item" data-s="1"><span class="step-num">1</span><span class="step-label">Ghế ngồi</span></div><div class="step-line"></div>
+        <div class="step-item" data-s="2"><span class="step-num">2</span><span class="step-label">Bắp nước</span></div><div class="step-line"></div>
+        <div class="step-item" data-s="3"><span class="step-num">3</span><span class="step-label">Ưu đãi</span></div><div class="step-line"></div>
+        <div class="step-item" data-s="4"><span class="step-num">4</span><span class="step-label">Thanh toán</span></div>
+        <button class="close-modal-btn" id="close-modal" aria-label="Đóng">✕</button>
+      </div>
+      <div class="booking-modal-body">
+        <div class="step-pane" id="pane-step-1">
+          <div class="screen-3d-wrapper"><div class="curved-screen"><span class="screen-glow-text" id="screen-name">MÀN HÌNH</span></div><div class="projector-light-field"></div></div>
+          <div class="seat-matrix" id="seat-matrix"></div>
+          <div class="seat-live" id="seat-live">Chưa chọn ghế</div>
+          <div class="seat-legend">
+            <div class="legend-item"><span class="seat-sample standard"></span> Thường 120K</div>
+            <div class="legend-item"><span class="seat-sample vip"></span> VIP 150K</div>
+            <div class="legend-item"><span class="seat-sample couple"></span> Ghế đôi 280K</div>
+            <div class="legend-item"><span class="seat-sample selected"></span> Đang chọn</div>
+            <div class="legend-item"><span class="seat-sample sold"></span> Đã bán</div>
+          </div>
+        </div>
+        <div class="step-pane" id="pane-step-2">
+          <h3 class="pane-title">Bắp nước và combo</h3><p class="pane-note">Không bắt buộc. Có thể bỏ qua bước này.</p>
+          <div class="combo-grid" id="combo-grid"></div>
+        </div>
+        <div class="step-pane" id="pane-step-3">
+          <h3 class="pane-title">Mã ưu đãi</h3><p class="pane-note">Mỗi đơn dùng được một mã.</p>
+          <div class="promo-box"><input type="text" id="promo-input" placeholder="Nhập mã, ví dụ CINE2026" autocomplete="off"><button class="btn-primary-gold" id="promo-apply">Áp dụng</button></div>
+          <p class="promo-msg" id="promo-msg" role="status"></p>
+          <div class="promo-chips" id="promo-list"></div>
+        </div>
+        <div class="step-pane" id="pane-step-4">
+          <div id="pay-form">
+            <h3 class="pane-title">Xác nhận và thanh toán</h3>
+            <div class="review" id="review"></div>
+            <div class="pay-methods">
+              <label class="pay-method"><input type="radio" name="pay" value="VNPay" checked><span><strong>VNPay QR</strong>Quét mã bằng ứng dụng ngân hàng</span></label>
+              <label class="pay-method"><input type="radio" name="pay" value="MoMo"><span><strong>Ví MoMo</strong>Thanh toán qua ví điện tử</span></label>
+              <label class="pay-method"><input type="radio" name="pay" value="Thẻ"><span><strong>Thẻ ATM / Visa</strong>Nhập thông tin thẻ ở cổng thanh toán</span></label>
+            </div>
+          </div>
+          <div id="pay-processing" class="pay-processing" hidden><div class="spinner"></div><h3>Đang xử lý thanh toán...</h3><p>Vui lòng không đóng cửa sổ này.</p></div>
+          <div id="pay-success" class="ticket-wrap" hidden></div>
+        </div>
+        <aside class="booking-summary-sidebar" id="summary">
+          <div class="summary-movie"><img id="sum-poster" alt=""><div><h3 id="sum-title"></h3><p class="summary-sub" id="sum-info"></p><p class="summary-time" id="sum-time"></p></div></div>
+          <div class="hold" id="hold" hidden><div class="hold-row"><span>Ghế được giữ trong</span><strong id="hold-time">10:00</strong></div><div class="hold-bar"><i id="hold-fill"></i></div></div>
+          <div class="summary-section"><span class="label">Ghế đã chọn</span><div class="selected-seats-pills" id="selected-seats-list"></div></div>
+          <div class="summary-breakdown">
+            <div class="line"><span>Tiền vé</span><span id="seat-cost">0đ</span></div>
+            <div class="line"><span>Bắp nước</span><span id="combo-cost">0đ</span></div>
+            <div class="line highlight"><span id="disc-label">Ưu đãi</span><span id="discount-cost">-0đ</span></div>
+          </div>
+          <div class="summary-total-row">
+            <div><span class="total-label">Tổng cộng</span><div class="animated-ticker" id="total-price-ticker">0đ</div></div>
+            <div class="summary-actions"><button class="btn-back" id="btn-prev-step">Quay lại</button><button class="btn-primary-gold btn-large" id="btn-next-step">Tiếp tục</button></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="view-staff" class="role-view">
+  <div class="pos-container">
+    <header class="pos-header">
+      <div class="pos-title"><h2>VIECENT POS</h2><span class="pos-badge">Quầy vé 03 · Vincom Q1</span></div>
+      <div class="pos-user">Thu ngân: Nguyễn Văn A (#883)</div>
+    </header>
+    <div class="pos3">
+      <section class="pos-col"><h3>1. Suất chiếu</h3><div class="pos-shows" id="pos-shows"></div></section>
+      <section class="pos-col"><h3>2. Chọn ghế <small id="pos-room"></small></h3><div class="seat-matrix pos-seatmap" id="pos-seats"></div>
+        <div class="seat-legend small"><div class="legend-item"><span class="seat-sample standard"></span>Thường</div><div class="legend-item"><span class="seat-sample vip"></span>VIP</div><div class="legend-item"><span class="seat-sample couple"></span>Đôi</div><div class="legend-item"><span class="seat-sample sold"></span>Đã bán</div></div>
+      </section>
+      <section class="pos-col pos-order"><h3>3. Đơn hàng <span class="pos-state" id="pos-state">Sẵn sàng</span></h3>
+        <div class="pos-lines" id="pos-lines"></div>
+        <div class="pos-combos" id="pos-combos"></div>
+        <div class="pos-input-group"><label for="pos-phone">SĐT khách (thẻ thành viên, thử 0908123456 hoặc 0912345678)</label><input type="tel" class="pos-input" id="pos-phone" inputmode="numeric" maxlength="10" placeholder="09xxxxxxxx"><span class="pos-member" id="pos-member"></span></div>
+        <div class="pos-input-group"><label for="pos-promo">Khuyến mãi</label><select class="pos-input" id="pos-promo"></select></div>
+        <div class="pos-total"><span>Tổng</span><strong id="pos-total">0đ</strong></div>
+        <div class="pos-pay-buttons"><button class="btn-pos-pay cash" data-m="Tiền mặt">TIỀN MẶT</button><button class="btn-pos-pay vnpay" data-m="VNPay QR">VNPAY QR</button><button class="btn-pos-pay momo" data-m="MoMo">MOMO</button></div>
+        <button class="btn-back pos-cancel" id="pos-cancel">Hủy giao dịch, trả ghế</button>
+        <p class="pos-status" id="pos-status" role="status"></p>
+        <div class="pos-ticket" id="pos-ticket" hidden></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+<div id="view-admin" class="role-view">
+  <div class="adm-layout">
+    <aside class="adm-sidebar">
+      <div class="adm-brand">VIECENT <span>ADMIN</span></div>
+      <nav class="adm-menu" id="adm-menu">
+        <a href="#" class="adm-item active" data-v="dash">Tổng quan</a>
+        <a href="#" class="adm-item" data-v="movies">Phim và suất chiếu</a>
+        <a href="#" class="adm-item" data-v="cinemas">Rạp và phòng chiếu</a>
+        <a href="#" class="adm-item" data-v="combos">Combo bắp nước</a>
+        <a href="#" class="adm-item" data-v="promos">Khuyến mãi</a>
+        <a href="#" class="adm-item" data-v="customers">Khách hàng</a>
+        <a href="#" class="adm-item" data-v="orders">Đơn hàng và vé</a>
+        <a href="#" class="adm-item" data-v="staff">Nhân sự</a>
+      </nav>
+    </aside>
+    <main class="adm-main">
+      <header class="adm-header"><h2 id="adm-title"></h2><div class="adm-tools" id="adm-tools"></div></header>
+      <div id="adm-content"></div>
+    </main>
+  </div>
+</div>
+
+<div id="adm-dialog" class="adm-dialog" hidden></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="scriptcnm.js"></script>
+</body>
+</html>
