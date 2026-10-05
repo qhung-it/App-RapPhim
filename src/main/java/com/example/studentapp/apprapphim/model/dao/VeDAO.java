@@ -18,6 +18,8 @@ public interface VeDAO {
 
     List<Ve> findBySuatChieu(String maSuat);
 
+    List<String> findMaGheDaDat(String maSuat);
+
     boolean existsBySuatChieuAndGhe(String maSuat, String maGhe);
 
     List<Ve> findBySuatChieuAndGhe(String maSuat, List<String> danhSachMaGhe);

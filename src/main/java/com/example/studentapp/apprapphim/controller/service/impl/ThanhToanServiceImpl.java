@@ -16,9 +16,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-/**
- * Service thanh toán. Các thay đổi ThanhToan + DonDatVe được commit atomically.
- */
 public class ThanhToanServiceImpl implements ThanhToanService {
 
     private final ThanhToanDAO thanhToanDAO;
@@ -37,26 +34,50 @@ public class ThanhToanServiceImpl implements ThanhToanService {
     public ThanhToan taoThanhToan(String maDon, BigDecimal soTien, PhuongThuc phuongThuc) {
         return JpaDaoSupport.executeInTransaction(em -> {
             DonDatVe don = donDatVeDAO.findById(maDon);
-            if (don == null || don.getTrangThai() != TrangThaiDon.ChoThanhToan
-                    || soTien == null || soTien.signum() <= 0 || phuongThuc == null) return null;
 
-            ThanhToan existing = thanhToanDAO.findByDonDatVe(maDon);
-            if (existing != null && existing.getTrangThai() != TrangThaiThanhToan.ThatBai) {
-                return existing;
+            if (don == null
+                    || don.getTrangThai() != TrangThaiDon.ChoThanhToan
+                    || soTien == null
+                    || soTien.signum() <= 0
+                    || phuongThuc == null) {
+                return null;
             }
 
             BigDecimal expected = don.tinhTongTienSauGiam();
-            if (soTien.compareTo(expected) != 0) return null;
+            if (expected.signum() < 0 || soTien.compareTo(expected) != 0) {
+                return null;
+            }
 
-            ThanhToan tt = new ThanhToan();
-            tt.setMaTT("TT-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
+            /*
+             * Nếu giao dịch thất bại trước đó thì dùng lại chính bản ghi đó.
+             * Như vậy một đơn không tạo hàng loạt ThanhToan.
+             */
+            ThanhToan tt = thanhToanDAO.findByDonDatVe(maDon);
+
+            if (tt != null && tt.getTrangThai() == TrangThaiThanhToan.ThanhCong) {
+                return tt;
+            }
+
+            if (tt == null) {
+                tt = new ThanhToan();
+                tt.setMaTT("TT-" + UUID.randomUUID()
+                        .toString().substring(0, 8).toUpperCase());
+                tt.setDonDatVe(don);
+            }
+
             tt.setThoiGian(LocalDateTime.now());
             tt.setSoTien(soTien);
             tt.setPhuongThuc(phuongThuc);
             tt.setTrangThai(TrangThaiThanhToan.DangXuLy);
+
+            // DonDatVe là phía sở hữu FK (maTT), nên phải cập nhật phía này.
+            don.setThanhToan(tt);
             tt.setDonDatVe(don);
 
-            return thanhToanDAO.save(tt);
+            thanhToanDAO.save(tt);
+            donDatVeDAO.save(don);
+
+            return tt;
         });
     }
 
@@ -64,21 +85,32 @@ public class ThanhToanServiceImpl implements ThanhToanService {
     public boolean thanhToan(String maTT) {
         return JpaDaoSupport.executeInTransaction(em -> {
             ThanhToan tt = thanhToanDAO.findById(maTT);
-            if (tt == null || tt.getTrangThai() != TrangThaiThanhToan.DangXuLy) return false;
+
+            if (tt == null || tt.getTrangThai() != TrangThaiThanhToan.DangXuLy) {
+                return false;
+            }
 
             DonDatVe don = tt.getDonDatVe();
-            if (don == null || don.getTrangThai() == TrangThaiDon.DaHuy) return false;
+            if (don == null || don.getTrangThai() == TrangThaiDon.DaHuy) {
+                return false;
+            }
 
-            // Luôn kiểm tra lại số tiền trước khi ghi nhận thành công.
             BigDecimal expected = don.tinhTongTienSauGiam();
-            if (tt.getSoTien() == null || tt.getSoTien().compareTo(expected) != 0) return false;
+            if (tt.getSoTien() == null
+                    || expected.signum() < 0
+                    || tt.getSoTien().compareTo(expected) != 0) {
+                return false;
+            }
 
             tt.setTrangThai(TrangThaiThanhToan.ThanhCong);
             tt.setThoiGian(LocalDateTime.now());
-            thanhToanDAO.save(tt);
+            tt.setDonDatVe(don);
 
+            // Cập nhật cả hai phía của quan hệ OneToOne.
             don.setThanhToan(tt);
             don.setTrangThai(TrangThaiDon.DaThanhToan);
+
+            thanhToanDAO.save(tt);
             donDatVeDAO.save(don);
             return true;
         });
@@ -88,14 +120,13 @@ public class ThanhToanServiceImpl implements ThanhToanService {
     public boolean huyThanhToan(String maTT) {
         return JpaDaoSupport.executeInTransaction(em -> {
             ThanhToan tt = thanhToanDAO.findById(maTT);
-            if (tt == null || tt.getTrangThai() == TrangThaiThanhToan.ThanhCong) return false;
+
+            if (tt == null || tt.getTrangThai() == TrangThaiThanhToan.ThanhCong) {
+                return false;
+            }
 
             tt.setTrangThai(TrangThaiThanhToan.ThatBai);
             thanhToanDAO.save(tt);
-
-            // Không null don.thanhToan ở đây vì quan hệ OneToOne có orphanRemoval.
-            // Giữ giao dịch thất bại để bảo toàn lịch sử; lần thanh toán sau sẽ tạo
-            // một giao dịch mới và gán lại cho đơn khi thanh toán thành công.
             return true;
         });
     }

@@ -4,6 +4,7 @@ import com.example.studentapp.apprapphim.model.Enum.TrangThaiDon;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiThanhToan;
 import com.example.studentapp.apprapphim.model.dao.ThongKeDoanhThuDAO;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -73,12 +74,20 @@ public class ThongKeDoanhhThuDaoImpl implements ThongKeDoanhThuDAO {
         });
     }
 
+    /*
+     * Phân bổ doanh thu sau khuyến mãi theo tỷ lệ giá trị gốc của từng thành phần.
+     * Nhờ đó doanhThuVe + doanhThuCombo = doanhThuTheoNgay.
+     */
     @Override
     public BigDecimal doanhThuVeTheoNgay(LocalDate ngay) {
         if (ngay == null) return ZERO;
         return JpaDaoSupport.execute(em -> {
             BigDecimal result = em.createQuery("""
-                    SELECT COALESCE(SUM(v.giaVe + s.giaSuat + g.gia), 0)
+                    SELECT COALESCE(SUM(
+                        CASE WHEN d.tongTien > 0
+                        THEN t.soTien * (v.giaVe + s.giaSuat + g.gia) / d.tongTien
+                        ELSE 0 END
+                    ), 0)
                     FROM Ve v
                     JOIN v.donDatVe d
                     JOIN d.thanhToan t
@@ -103,7 +112,11 @@ public class ThongKeDoanhhThuDaoImpl implements ThongKeDoanhThuDAO {
         if (ngay == null) return ZERO;
         return JpaDaoSupport.execute(em -> {
             BigDecimal result = em.createQuery("""
-                    SELECT COALESCE(SUM(c.thanhTien), 0)
+                    SELECT COALESCE(SUM(
+                        CASE WHEN d.tongTien > 0
+                        THEN t.soTien * c.thanhTien / d.tongTien
+                        ELSE 0 END
+                    ), 0)
                     FROM ChiTietCombo c
                     JOIN c.donDatVe d
                     JOIN d.thanhToan t
@@ -142,7 +155,11 @@ public class ThongKeDoanhhThuDaoImpl implements ThongKeDoanhThuDAO {
     private BigDecimal doanhThuTheoDimension(String fieldPath, String value) {
         return JpaDaoSupport.execute(em -> {
             BigDecimal result = em.createQuery("""
-                    SELECT COALESCE(SUM(v.giaVe + s.giaSuat + g.gia), 0)
+                    SELECT COALESCE(SUM(
+                        CASE WHEN d.tongTien > 0
+                        THEN t.soTien * (v.giaVe + s.giaSuat + g.gia) / d.tongTien
+                        ELSE 0 END
+                    ), 0)
                     FROM Ve v
                     JOIN v.donDatVe d
                     JOIN d.thanhToan t
