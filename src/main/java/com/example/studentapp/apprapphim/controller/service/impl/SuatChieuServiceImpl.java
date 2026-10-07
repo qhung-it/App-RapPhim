@@ -1,9 +1,9 @@
 package com.example.studentapp.apprapphim.controller.service.impl;
 
 import com.example.studentapp.apprapphim.controller.service.interf.SuatChieuService;
-import com.example.studentapp.apprapphim.model.dao.GheDAO;
-import com.example.studentapp.apprapphim.model.dao.SuatChieuDAO;
-import com.example.studentapp.apprapphim.model.dao.VeDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.GheDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.SuatChieuDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.VeDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.GheDAOImpl;
 import com.example.studentapp.apprapphim.model.dao.impl.SuatChieuDAOImpl;
 import com.example.studentapp.apprapphim.model.dao.impl.VeDAOImpl;

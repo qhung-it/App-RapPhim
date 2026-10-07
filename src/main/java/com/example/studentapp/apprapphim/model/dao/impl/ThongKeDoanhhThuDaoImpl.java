@@ -2,7 +2,7 @@ package com.example.studentapp.apprapphim.model.dao.impl;
 
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiDon;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiThanhToan;
-import com.example.studentapp.apprapphim.model.dao.ThongKeDoanhThuDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.ThongKeDoanhThuDAO;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 
 import java.math.BigDecimal;

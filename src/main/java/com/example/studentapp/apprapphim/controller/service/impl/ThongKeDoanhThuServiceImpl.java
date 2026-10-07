@@ -1,7 +1,7 @@
 package com.example.studentapp.apprapphim.controller.service.impl;
 
 import com.example.studentapp.apprapphim.controller.service.interf.ThongKeDoanhThuService;
-import com.example.studentapp.apprapphim.model.dao.ThongKeDoanhThuDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.ThongKeDoanhThuDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.ThongKeDoanhhThuDaoImpl;
 import java.math.BigDecimal;
 import java.time.LocalDate;

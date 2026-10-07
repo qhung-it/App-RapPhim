@@ -1,10 +1,10 @@
 package com.example.studentapp.apprapphim.model.dao.impl;
 
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiCombo;
-import com.example.studentapp.apprapphim.model.dao.ComboDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.ComboDAO;
 import com.example.studentapp.apprapphim.model.entity.Combo;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
-import jakarta.persistence.NoResultException;
+
 import java.util.List;
 
 public class ComboDAOImpl implements ComboDAO {

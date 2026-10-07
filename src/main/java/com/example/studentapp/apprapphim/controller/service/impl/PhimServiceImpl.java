@@ -2,8 +2,8 @@ package com.example.studentapp.apprapphim.controller.service.impl;
 
 import com.example.studentapp.apprapphim.controller.service.interf.PhimService;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiPhim;
-import com.example.studentapp.apprapphim.model.dao.PhimDAO;
-import com.example.studentapp.apprapphim.model.dao.SuatChieuDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.PhimDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.SuatChieuDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.PhimDAOImpl;
 import com.example.studentapp.apprapphim.model.dao.impl.SuatChieuDAOImpl;
 import com.example.studentapp.apprapphim.model.entity.Phim;

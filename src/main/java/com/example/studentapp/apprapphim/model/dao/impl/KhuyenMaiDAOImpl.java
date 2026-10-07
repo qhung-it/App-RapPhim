@@ -1,7 +1,7 @@
 package com.example.studentapp.apprapphim.model.dao.impl;
 
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiKhuyenMai;
-import com.example.studentapp.apprapphim.model.dao.KhuyenMaiDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.KhuyenMaiDAO;
 import com.example.studentapp.apprapphim.model.entity.KhuyenMai;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import java.time.LocalDate;

@@ -1,6 +1,6 @@
 package com.example.studentapp.apprapphim.model.dao.impl;
 
-import com.example.studentapp.apprapphim.model.dao.LoaiKhachHangDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.LoaiKhachHangDAO;
 import com.example.studentapp.apprapphim.model.entity.LoaiKhachHang;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.example.studentapp.apprapphim.controller.service.impl;
 
 import com.example.studentapp.apprapphim.controller.service.interf.RapService;
-import com.example.studentapp.apprapphim.model.dao.PhongChieuDAO;
-import com.example.studentapp.apprapphim.model.dao.RapDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.PhongChieuDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.RapDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.PhongChieuDAOImpl;
 import com.example.studentapp.apprapphim.model.dao.impl.RapDAOImpl;
 import com.example.studentapp.apprapphim.model.entity.Rap;

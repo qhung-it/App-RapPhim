@@ -1,6 +1,6 @@
 package com.example.studentapp.apprapphim.model.dao.impl;
 
-import com.example.studentapp.apprapphim.model.dao.PhongChieuDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.PhongChieuDAO;
 import com.example.studentapp.apprapphim.model.entity.PhongChieu;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import java.util.List;

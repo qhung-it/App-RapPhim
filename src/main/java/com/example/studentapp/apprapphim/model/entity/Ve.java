@@ -25,7 +25,7 @@ public class Ve {
     private String maVeDienTu;
 
     @Column(name = "giaVe", precision = 12, scale = 2, nullable = false)
-    private BigDecimal giaVe; //  giá vé cơ bản
+    private BigDecimal giaVeCoBan;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "trangThai", nullable = false, length = 30)
@@ -62,12 +62,12 @@ public class Ve {
         this.maVeDienTu = maVeDienTu;
     }
 
-    public BigDecimal getGiaVe() {
-        return giaVe;
+    public BigDecimal getGiaVeCoBan() {
+        return giaVeCoBan;
     }
 
-    public void setGiaVe(BigDecimal giaVe) {
-        this.giaVe = giaVe;
+    public void setGiaVeCoBan(BigDecimal giaVeCoBan) {
+        this.giaVeCoBan = giaVeCoBan;
     }
 
     public TrangThaiVe getTrangThai() {
@@ -118,7 +118,7 @@ public class Ve {
     // giá của 1 vé = giá vé cơ bản + giá suất + giá theo ghế
     public BigDecimal tinhGiaVe() {
         BigDecimal giaVeCoBan =
-                giaVe != null ? giaVe : BigDecimal.ZERO;
+                this.giaVeCoBan != null ? this.giaVeCoBan : BigDecimal.ZERO;
 
         BigDecimal giaSuat =
                 suatChieu != null && suatChieu.getGiaSuat() != null

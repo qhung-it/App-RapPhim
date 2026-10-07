@@ -1,7 +1,7 @@
 package com.example.studentapp.apprapphim.controller.service.impl;
 
 import com.example.studentapp.apprapphim.controller.service.interf.LoaiKhachHangService;
-import com.example.studentapp.apprapphim.model.dao.LoaiKhachHangDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.LoaiKhachHangDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.LoaiKhachHangDAOImpl;
 import com.example.studentapp.apprapphim.model.entity.LoaiKhachHang;
 import java.util.List;

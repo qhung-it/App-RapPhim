@@ -1,6 +1,6 @@
 package com.example.studentapp.apprapphim.model.dao.impl;
 
-import com.example.studentapp.apprapphim.model.dao.ChiTietComboDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.ChiTietComboDAO;
 import com.example.studentapp.apprapphim.model.entity.ChiTietCombo;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import java.util.List;

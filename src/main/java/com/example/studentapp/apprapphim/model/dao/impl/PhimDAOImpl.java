@@ -1,7 +1,7 @@
 package com.example.studentapp.apprapphim.model.dao.impl;
 
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiPhim;
-import com.example.studentapp.apprapphim.model.dao.PhimDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.PhimDAO;
 import com.example.studentapp.apprapphim.model.entity.Phim;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import java.util.List;

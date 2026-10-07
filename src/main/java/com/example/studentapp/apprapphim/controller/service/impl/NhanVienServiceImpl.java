@@ -2,7 +2,7 @@ package com.example.studentapp.apprapphim.controller.service.impl;
 
 import com.example.studentapp.apprapphim.controller.service.interf.NhanVienService;
 import com.example.studentapp.apprapphim.model.Enum.ChucVu;
-import com.example.studentapp.apprapphim.model.dao.NhanVienDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.NhanVienDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.NhanVienDAOImpl;
 import com.example.studentapp.apprapphim.model.entity.NhanVien;
 import java.util.List;

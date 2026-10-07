@@ -1,6 +1,6 @@
 package com.example.studentapp.apprapphim.model.dao.impl;
 
-import com.example.studentapp.apprapphim.model.dao.RapDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.RapDAO;
 import com.example.studentapp.apprapphim.model.entity.Rap;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import java.util.List;
