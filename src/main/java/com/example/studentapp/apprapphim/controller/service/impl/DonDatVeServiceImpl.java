@@ -4,8 +4,8 @@ import com.example.studentapp.apprapphim.controller.service.interf.DonDatVeServi
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiDon;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiThanhToan;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiSuatChieu;
-import com.example.studentapp.apprapphim.model.dao.*;
 import com.example.studentapp.apprapphim.model.dao.impl.*;
+import com.example.studentapp.apprapphim.model.dao.interf.*;
 import com.example.studentapp.apprapphim.model.entity.*;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import jakarta.persistence.PersistenceException;

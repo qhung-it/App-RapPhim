@@ -2,7 +2,7 @@ package com.example.studentapp.apprapphim.controller.service.impl;
 
 import com.example.studentapp.apprapphim.controller.service.interf.VeService;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiVe;
-import com.example.studentapp.apprapphim.model.dao.VeDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.VeDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.VeDAOImpl;
 import com.example.studentapp.apprapphim.model.entity.Ve;
 import java.util.List;

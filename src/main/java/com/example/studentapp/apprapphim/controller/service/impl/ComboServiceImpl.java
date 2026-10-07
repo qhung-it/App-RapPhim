@@ -2,7 +2,7 @@ package com.example.studentapp.apprapphim.controller.service.impl;
 
 import com.example.studentapp.apprapphim.controller.service.interf.ComboService;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiCombo;
-import com.example.studentapp.apprapphim.model.dao.ComboDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.ComboDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.ComboDAOImpl;
 import com.example.studentapp.apprapphim.model.entity.Combo;
 import java.util.List;

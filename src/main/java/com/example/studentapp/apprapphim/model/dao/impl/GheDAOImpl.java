@@ -1,6 +1,6 @@
 package com.example.studentapp.apprapphim.model.dao.impl;
 
-import com.example.studentapp.apprapphim.model.dao.GheDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.GheDAO;
 import com.example.studentapp.apprapphim.model.entity.Ghe;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import java.util.List;

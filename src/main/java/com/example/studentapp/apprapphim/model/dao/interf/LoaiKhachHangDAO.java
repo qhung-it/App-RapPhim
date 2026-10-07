@@ -1,4 +1,4 @@
-package com.example.studentapp.apprapphim.model.dao;
+package com.example.studentapp.apprapphim.model.dao.interf;
 
 import com.example.studentapp.apprapphim.model.entity.LoaiKhachHang;
 

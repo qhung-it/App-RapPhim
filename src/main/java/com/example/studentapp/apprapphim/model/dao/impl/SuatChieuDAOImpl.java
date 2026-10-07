@@ -1,6 +1,6 @@
 package com.example.studentapp.apprapphim.model.dao.impl;
 
-import com.example.studentapp.apprapphim.model.dao.SuatChieuDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.SuatChieuDAO;
 import com.example.studentapp.apprapphim.model.entity.SuatChieu;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import java.time.LocalDate;

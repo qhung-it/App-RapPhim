@@ -1,6 +1,6 @@
 package com.example.studentapp.apprapphim.model.dao.impl;
 
-import com.example.studentapp.apprapphim.model.dao.VeDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.VeDAO;
 import com.example.studentapp.apprapphim.model.entity.Ve;
 import com.example.studentapp.apprapphim.model.util.JpaDaoSupport;
 import java.util.List;

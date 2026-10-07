@@ -4,8 +4,8 @@ import com.example.studentapp.apprapphim.controller.service.interf.ThanhToanServ
 import com.example.studentapp.apprapphim.model.Enum.PhuongThuc;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiDon;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiThanhToan;
-import com.example.studentapp.apprapphim.model.dao.DonDatVeDAO;
-import com.example.studentapp.apprapphim.model.dao.ThanhToanDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.DonDatVeDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.ThanhToanDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.DonDatVeDAOImpl;
 import com.example.studentapp.apprapphim.model.dao.impl.ThanhToanDAOImpl;
 import com.example.studentapp.apprapphim.model.entity.DonDatVe;

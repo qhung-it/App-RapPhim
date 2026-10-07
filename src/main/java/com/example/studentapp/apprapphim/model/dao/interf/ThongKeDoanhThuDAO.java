@@ -1,4 +1,4 @@
-package com.example.studentapp.apprapphim.model.dao;
+package com.example.studentapp.apprapphim.model.dao.interf;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

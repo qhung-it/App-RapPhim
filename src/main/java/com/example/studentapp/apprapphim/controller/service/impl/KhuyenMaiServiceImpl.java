@@ -1,7 +1,7 @@
 package com.example.studentapp.apprapphim.controller.service.impl;
 
 import com.example.studentapp.apprapphim.controller.service.interf.KhuyenMaiService;
-import com.example.studentapp.apprapphim.model.dao.KhuyenMaiDAO;
+import com.example.studentapp.apprapphim.model.dao.interf.KhuyenMaiDAO;
 import com.example.studentapp.apprapphim.model.dao.impl.KhuyenMaiDAOImpl;
 import com.example.studentapp.apprapphim.model.entity.DonDatVe;
 import com.example.studentapp.apprapphim.model.entity.KhuyenMai;
