@@ -350,8 +350,8 @@ public class DonDatVeServiceImpl implements DonDatVeService {
         if (ve == null
                 || ve.getSuatChieu() == null
                 || ve.getGhe() == null
-                || ve.getGiaVe() == null
-                || ve.getGiaVe().signum() < 0) {
+                || ve.getGiaVeCoBan() == null
+                || ve.getGiaVeCoBan().signum() < 0) {
             return false;
         }
 
