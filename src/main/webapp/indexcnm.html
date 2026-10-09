@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="vi" class="theme-customer">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hệ thống rạp chiếu phim - CNPM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stylecnm.css">
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div id="view-login" class="login-view active">
+  <div class="login-movie-bg" id="login-movie-bg"></div>
+  <div class="login-overlay"></div>
+
+  <div class="login-container">
+    <a href="#" class="login-brand">
+      <span class="login-logo">♛</span>
+      <span>VIE<span class="gold-text">CENT</span></span>
+    </a>
+
+    <div class="login-card">
+      <div class="auth-panel active" id="auth-login">
+        <div class="login-header">
+          <h1>Đăng nhập</h1>
+          <p>Đăng nhập để tiếp tục trải nghiệm VIECENT</p>
+        </div>
+
+        <form id="login-form" class="login-form">
+          <div class="login-field">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" name="email" placeholder="Nhập email của bạn" autocomplete="email">
+          </div>
+
+          <div class="login-field">
+            <div class="login-label-row">
+              <label for="login-password">Mật khẩu</label>
+              <a href="#" id="forgot-password">Quên mật khẩu?</a>
+            </div>
+
+            <div class="password-wrapper">
+              <input type="password" id="login-password" name="password" placeholder="Nhập mật khẩu" autocomplete="current-password">
+              <button type="button" class="password-toggle" id="toggle-password" aria-label="Hiện mật khẩu">👁</button>
+            </div>
+          </div>
+
+          <p class="login-message" id="login-message" role="alert"></p>
+
+          <button type="submit" class="btn-primary-gold login-submit">Đăng nhập</button>
+        </form>
+
+        <div class="login-divider"><span>hoặc</span></div>
+
+        <div class="login-register">
+          <span>Chưa có tài khoản?</span>
+          <a href="#" id="go-register">Đăng ký ngay</a>
+        </div>
+
+      </div>
+
+      <!-- ================= ĐĂNG KÝ ================= -->
+      <div class="auth-panel" id="auth-register">
+        <div class="login-header">
+          <h1>Tạo tài khoản</h1>
+          <p>Đăng ký thành viên để đặt vé và nhận ưu đãi từ VIECENT</p>
+        </div>
+
+        <form id="register-form" class="login-form">
+          <div class="login-field">
+            <label for="register-name">Họ và tên</label>
+            <input type="text" id="register-name" placeholder="Nhập họ và tên" autocomplete="name">
+          </div>
+
+          <div class="login-field">
+            <label for="register-phone">Số điện thoại</label>
+            <input type="tel" id="register-phone" placeholder="Nhập số điện thoại" autocomplete="tel">
+          </div>
+
+          <div class="login-field">
+            <label for="register-email">Email</label>
+            <input type="email" id="register-email" placeholder="Nhập email của bạn" autocomplete="email">
+          </div>
+
+          <div class="login-field">
+            <label for="register-password">Mật khẩu</label>
+            <div class="password-wrapper">
+              <input type="password" id="register-password" placeholder="Tạo mật khẩu" autocomplete="new-password">
+              <button type="button" class="password-toggle" id="toggle-register-password" aria-label="Hiện mật khẩu">👁</button>
+            </div>
+          </div>
+
+          <div class="login-field">
+            <label for="register-confirm">Xác nhận mật khẩu</label>
+            <div class="password-wrapper">
+              <input type="password" id="register-confirm" placeholder="Nhập lại mật khẩu" autocomplete="new-password">
+              <button type="button" class="password-toggle" id="toggle-register-confirm" aria-label="Hiện mật khẩu">👁</button>
+            </div>
+          </div>
+
+          <label class="auth-check">
+            <input type="checkbox" id="register-terms">
+            <span>Tôi đồng ý với điều khoản sử dụng và chính sách của VIECENT.</span>
+          </label>
+
+          <p class="login-message" id="register-message" role="alert"></p>
+
+          <button type="submit" class="btn-primary-gold login-submit">Đăng ký</button>
+        </form>
+
+        <button type="button" class="login-home auth-back" id="back-to-login-register">← Quay lại đăng nhập</button>
+      </div>
+
+      <!-- ================= QUÊN MẬT KHẨU ================= -->
+      <div class="auth-panel" id="auth-forgot">
+        <div class="login-header">
+          <h1>Quên mật khẩu</h1>
+          <p id="forgot-description">Nhập email đã đăng ký để nhận mã xác thực.</p>
+        </div>
+
+        <form id="forgot-form" class="login-form">
+          <div class="forgot-step active" id="forgot-step-email">
+            <div class="login-field">
+              <label for="forgot-email">Email</label>
+              <input type="email" id="forgot-email" placeholder="Nhập email của bạn" autocomplete="email">
+            </div>
+
+            <p class="login-message" id="forgot-message" role="alert"></p>
+
+            <button type="submit" class="btn-primary-gold login-submit">Gửi mã xác thực</button>
+          </div>
+
+          <div class="forgot-step" id="forgot-step-reset">
+            <div class="otp-note">
+              Mã xác thực đã được gửi đến email của bạn.
+            </div>
+
+            <div class="login-field">
+              <label for="forgot-otp">Mã xác thực</label>
+              <input type="text" id="forgot-otp" placeholder="Nhập mã 6 số" inputmode="numeric" maxlength="6">
+            </div>
+
+            <div class="login-field">
+              <label for="forgot-new-password">Mật khẩu mới</label>
+              <div class="password-wrapper">
+                <input type="password" id="forgot-new-password" placeholder="Nhập mật khẩu mới" autocomplete="new-password">
+                <button type="button" class="password-toggle" id="toggle-forgot-password" aria-label="Hiện mật khẩu">👁</button>
+              </div>
+            </div>
+
+            <div class="login-field">
+              <label for="forgot-confirm">Xác nhận mật khẩu mới</label>
+              <div class="password-wrapper">
+                <input type="password" id="forgot-confirm" placeholder="Nhập lại mật khẩu mới" autocomplete="new-password">
+                <button type="button" class="password-toggle" id="toggle-forgot-confirm" aria-label="Hiện mật khẩu">👁</button>
+              </div>
+            </div>
+
+            <p class="login-message" id="forgot-reset-message" role="alert"></p>
+
+            <button type="button" class="btn-primary-gold login-submit" id="reset-password-submit">
+              Đặt lại mật khẩu
+            </button>
+          </div>
+        </form>
+
+        <button type="button" class="login-home auth-back" id="back-to-login-forgot">← Quay lại đăng nhập</button>
+      </div>
+    </div>
+
+    <p class="login-footer">© 2026 VIECENT · Hệ thống rạp chiếu phim</p>
+  </div>
+</div>
+
+<div class="dev-role-switcher" id="demo">
+  <button class="demo-toggle" id="demo-toggle" aria-expanded="false" aria-controls="demo-menu">⚙ Demo</button>
+  <div class="demo-menu" id="demo-menu">
+    <button class="role-btn active" data-role="customer">Khách hàng</button>
+    <button class="role-btn" data-role="staff">Nhân viên POS</button>
+    <button class="role-btn" data-role="admin">Quản trị</button>
+  </div>
+</div>
+
+<div id="view-customer" class="role-view active">
+  <header class="cinematic-nav">
+    <a href="#top" class="nav-brand">
+      <span class="logo-mark">♛</span>
+      <span>VIE<span class="gold-text">CENT</span></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Điều hướng chính">
+      <a href="#top" class="nav-link active">Trang chủ</a>
+      <a href="#movies" class="nav-link">Phim</a>
+      <a href="#showtimes" class="nav-link">Lịch chiếu</a>
+      <a href="#cinemas" class="nav-link">Rạp</a>
+      <a href="#promos" class="nav-link">Ưu đãi</a>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="search-box">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="search" id="search" placeholder="Tên phim, đạo diễn, diễn viên..." aria-label="Tìm phim">
+      </div>
+
+      <div class="user-account" id="user-account">
+        <button class="user-avatar" id="user-avatar" type="button">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Tài khoản">
+        </button>
+
+        <div class="user-menu" id="user-menu">
+          <div class="user-menu-header">
+            <div class="user-menu-name">👤 Hoàng Lê</div>
+            <div class="user-menu-role">Thành viên VIECENT</div>
+          </div>
+
+          <div class="user-menu-section">
+            <div class="user-menu-title">TÀI KHOẢN</div>
+            <button class="user-menu-item" id="account-info">👤 Thông tin tài khoản</button>
+            <button class="user-menu-item" id="my-tickets">🎫 Vé của tôi</button>
+            <button class="user-menu-item" id="booking-history">📜 Lịch sử đặt vé</button>
+          </div>
+
+          <div class="user-menu-section">
+            <div class="user-menu-title">TIỆN ÍCH</div>
+            <button class="user-menu-item" id="my-promotions">⭐ Ưu đãi của tôi</button>
+            <button class="user-menu-item" id="favorite-movies">❤️ Phim yêu thích</button>
+            <button class="user-menu-item" id="notifications">🔔 Thông báo</button>
+            <button class="user-menu-item" id="settings">⚙️ Cài đặt</button>
+          </div>
+
+          <button class="user-menu-item" id="help">❓ Trợ giúp</button>
+
+          <div class="user-menu-divider"></div>
+
+          <button class="user-menu-item logout" id="logout">🚪 Đăng xuất</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero-cinematic" id="top">
+    <div class="hero-backdrop" id="hero-backdrop"></div>
+    <div class="hero-gradient-overlay"></div>
+    <div class="hero-content" id="hero-content">
+      <div class="hero-tag"><span class="badge-gold">PHIM NỔI BẬT</span><span id="hero-fmt"></span></div>
+      <h1 class="hero-title" id="hero-title"></h1>
+      <p class="hero-subtitle" id="hero-subtitle"></p>
+      <div class="hero-metadata" id="hero-meta"></div>
+      <p class="hero-description" id="hero-desc"></p>
+      <div class="hero-actions">
+        <button class="btn-primary-gold" id="hero-book">Đặt vé ngay</button>
+        <button class="btn-glass" id="hero-trailer">▶ Xem trailer</button>
+        <button class="btn-glass" id="hero-detail">Xem chi tiết</button>
+      </div>
+      <div class="hero-next" id="hero-next"></div>
+    </div>
+    <div class="hero-dots" id="hero-dots"></div>
+  </section>
+
+  <section class="section-container" id="movies">
+    <div class="section-header">
+      <div><h2 class="section-title">Phim</h2><p class="section-sub" id="movie-count"></p></div>
+      <div class="filter-pills" id="filters" role="group" aria-label="Lọc phim">
+        <button class="pill active" data-f="all">Tất cả</button>
+        <button class="pill" data-f="now">Đang chiếu</button>
+        <button class="pill" data-f="soon">Sắp chiếu</button>
+        <button class="pill" data-f="IMAX">IMAX</button>
+        <button class="pill" data-f="4DX">4DX</button>
+        <button class="pill" data-f="2D">2D</button>
+        <button class="pill" data-f="3D">3D</button>
+      </div>
+    </div>
+    <div class="movie-grid" id="movie-grid"></div>
+    <div class="empty-state" id="empty-state" hidden>
+      <div class="empty-icon">⌕</div>
+      <h3>Không tìm thấy phim</h3>
+      <p>Thử tìm theo tên phim, thể loại hoặc đạo diễn.</p>
+      <button class="btn-glass" id="clear-search">Xóa bộ lọc</button>
+    </div>
+  </section>
+
+  <section class="section-container alt" id="showtimes">
+    <div class="section-header"><div><h2 class="section-title">Lịch chiếu</h2><p class="section-sub">Chọn ngày và rạp để xem suất chiếu</p></div></div>
+    <div class="st-controls">
+      <div class="filter-pills" id="st-dates" role="group" aria-label="Ngày"></div>
+      <div class="filter-pills" id="st-cinemas" role="group" aria-label="Rạp"></div>
+    </div>
+    <div class="st-list" id="st-list"></div>
+  </section>
+
+  <section class="section-container" id="cinemas">
+    <div class="section-header"><div><h2 class="section-title">Hệ thống rạp</h2><p class="section-sub">Ba cụm rạp tại TP. Hồ Chí Minh</p></div></div>
+    <div class="cinema-grid" id="cinema-grid"></div>
+  </section>
+
+  <section class="section-container alt" id="promos">
+    <div class="section-header"><div><h2 class="section-title">Ưu đãi</h2><p class="section-sub">Bấm vào thẻ để sao chép mã, dùng ở bước Ưu đãi khi đặt vé</p></div></div>
+    <div class="promo-grid" id="promo-grid"></div>
+  </section>
+
+  <footer class="site-footer">© 2026 HoangViet · Hotline 08 14149 579 · Giờ mở cửa 08:00 – 23:30</footer>
+
+  <div id="detail" class="detail-backdrop" hidden role="dialog" aria-modal="true" aria-label="Chi tiết phim"></div>
+
+  <!-- POPUP ĐẶT VÉ -->
+  <div id="booking-modal" class="booking-modal-backdrop" role="dialog" aria-modal="true" aria-label="Đặt vé">
+    <div class="booking-modal-container">
+      <div class="journey-stepper" id="stepper">
+        <div class="step-item" data-s="1"><span class="step-num">1</span><span class="step-label">Ghế ngồi</span></div><div class="step-line"></div>
+        <div class="step-item" data-s="2"><span class="step-num">2</span><span class="step-label">Bắp nước</span></div><div class="step-line"></div>
+        <div class="step-item" data-s="3"><span class="step-num">3</span><span class="step-label">Ưu đãi</span></div><div class="step-line"></div>
+        <div class="step-item" data-s="4"><span class="step-num">4</span><span class="step-label">Thanh toán</span></div>
+        <button class="close-modal-btn" id="close-modal" aria-label="Đóng">✕</button>
+      </div>
+      <div class="booking-modal-body">
+        <div class="step-pane" id="pane-step-1">
+          <div class="screen-3d-wrapper"><div class="curved-screen"><span class="screen-glow-text" id="screen-name">MÀN HÌNH</span></div><div class="projector-light-field"></div></div>
+          <div class="seat-matrix" id="seat-matrix"></div>
+          <div class="seat-live" id="seat-live">Chưa chọn ghế</div>
+          <div class="seat-legend">
+            <div class="legend-item"><span class="seat-sample standard"></span> Thường 120K</div>
+            <div class="legend-item"><span class="seat-sample vip"></span> VIP 150K</div>
+            <div class="legend-item"><span class="seat-sample couple"></span> Ghế đôi 280K</div>
+            <div class="legend-item"><span class="seat-sample selected"></span> Đang chọn</div>
+            <div class="legend-item"><span class="seat-sample sold"></span> Đã bán</div>
+          </div>
+        </div>
+        <div class="step-pane" id="pane-step-2">
+          <h3 class="pane-title">Bắp nước và combo</h3><p class="pane-note">Không bắt buộc. Có thể bỏ qua bước này.</p>
+          <div class="combo-grid" id="combo-grid"></div>
+        </div>
+        <div class="step-pane" id="pane-step-3">
+          <h3 class="pane-title">Mã ưu đãi</h3><p class="pane-note">Mỗi đơn dùng được một mã.</p>
+          <div class="promo-box"><input type="text" id="promo-input" placeholder="Nhập mã, ví dụ CINE2026" autocomplete="off"><button class="btn-primary-gold" id="promo-apply">Áp dụng</button></div>
+          <p class="promo-msg" id="promo-msg" role="status"></p>
+          <div class="promo-chips" id="promo-list"></div>
+        </div>
+        <div class="step-pane" id="pane-step-4">
+          <div id="pay-form">
+            <h3 class="pane-title">Xác nhận và thanh toán</h3>
+            <div class="review" id="review"></div>
+            <div class="pay-methods">
+              <label class="pay-method"><input type="radio" name="pay" value="VNPay" checked><span><strong>VNPay QR</strong>Quét mã bằng ứng dụng ngân hàng</span></label>
+              <label class="pay-method"><input type="radio" name="pay" value="MoMo"><span><strong>Ví MoMo</strong>Thanh toán qua ví điện tử</span></label>
+              <label class="pay-method"><input type="radio" name="pay" value="Thẻ"><span><strong>Thẻ ATM / Visa</strong>Nhập thông tin thẻ ở cổng thanh toán</span></label>
+            </div>
+          </div>
+          <div id="pay-processing" class="pay-processing" hidden><div class="spinner"></div><h3>Đang xử lý thanh toán...</h3><p>Vui lòng không đóng cửa sổ này.</p></div>
+          <div id="pay-success" class="ticket-wrap" hidden></div>
+        </div>
+        <aside class="booking-summary-sidebar" id="summary">
+          <div class="summary-movie"><img id="sum-poster" alt=""><div><h3 id="sum-title"></h3><p class="summary-sub" id="sum-info"></p><p class="summary-time" id="sum-time"></p></div></div>
+          <div class="hold" id="hold" hidden><div class="hold-row"><span>Ghế được giữ trong</span><strong id="hold-time">10:00</strong></div><div class="hold-bar"><i id="hold-fill"></i></div></div>
+          <div class="summary-section"><span class="label">Ghế đã chọn</span><div class="selected-seats-pills" id="selected-seats-list"></div></div>
+          <div class="summary-breakdown">
+            <div class="line"><span>Tiền vé</span><span id="seat-cost">0đ</span></div>
+            <div class="line"><span>Bắp nước</span><span id="combo-cost">0đ</span></div>
+            <div class="line highlight"><span id="disc-label">Ưu đãi</span><span id="discount-cost">-0đ</span></div>
+          </div>
+          <div class="summary-total-row">
+            <div><span class="total-label">Tổng cộng</span><div class="animated-ticker" id="total-price-ticker">0đ</div></div>
+            <div class="summary-actions"><button class="btn-back" id="btn-prev-step">Quay lại</button><button class="btn-primary-gold btn-large" id="btn-next-step">Tiếp tục</button></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= THÔNG TIN TÀI KHOẢN ================= -->
+<div id="view-account" class="role-view">
+  <main class="account-page">
+    <header class="account-header">
+      <button type="button" class="account-back" id="account-back">← Quay lại</button>
+      <a href="#" class="account-brand">♛ VIE<span>CENT</span></a>
+    </header>
+
+    <section class="account-content">
+      <div class="account-heading">
+        <span class="account-eyebrow">VIECENT MEMBER</span>
+        <h1>Thông tin tài khoản</h1>
+        <p>Quản lý thông tin cá nhân của bạn</p>
+      </div>
+
+      <div class="account-card">
+        <div class="account-profile">
+          <div class="account-avatar">
+            <img id="account-avatar-preview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Ảnh đại diện">
+          </div>
+          <div class="account-profile-info">
+            <h2 id="account-display-name">Hoàng Lê</h2>
+            <p>Thành viên VIECENT</p>
+            <label class="account-upload" for="account-avatar-file">Đổi ảnh đại diện</label>
+            <input type="file" id="account-avatar-file" accept="image/*" hidden>
+          </div>
+        </div>
+
+        <div class="account-divider"></div>
+
+        <form id="account-form">
+          <div class="account-form-grid">
+            <div class="account-field">
+              <label for="account-name">Họ và tên</label>
+              <input id="account-name" name="name" type="text" value="Hoàng Lê" required>
+            </div>
+
+            <div class="account-field">
+              <label for="account-email">Email</label>
+              <input id="account-email" name="email" type="email" placeholder="Nhập email của bạn" required>
+            </div>
+
+            <div class="account-field">
+              <label for="account-phone">Số điện thoại</label>
+              <input id="account-phone" name="phone" type="tel" placeholder="Nhập số điện thoại">
+            </div>
+
+            <div class="account-field">
+              <label for="account-birthday">Ngày sinh</label>
+              <input id="account-birthday" name="birthday" type="date">
+            </div>
+
+            <div class="account-field account-field-full">
+              <label for="account-gender">Giới tính</label>
+              <select id="account-gender" name="gender">
+                <option value="">Chọn giới tính</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+              </select>
+            </div>
+          </div>
+
+          <p class="account-message" id="account-message" role="status"></p>
+
+          <div class="account-actions">
+            <button type="button" class="account-btn account-btn-secondary" id="account-cancel">Hủy thay đổi</button>
+            <button type="submit" class="account-btn account-btn-primary">Lưu thông tin</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+
+<!-- ================= VÉ CỦA TÔI ================= -->
+<div id="view-tickets" class="role-view">
+  <main class="tickets-page">
+    <header class="tickets-header">
+      <button type="button" class="tickets-back" id="tickets-back">← Quay lại</button>
+      <a href="#" class="tickets-brand">♛ VIE<span>CENT</span></a>
+    </header>
+
+    <section class="tickets-content">
+      <div class="tickets-heading">
+        <span class="tickets-eyebrow">VIECENT MEMBER</span>
+        <h1>Vé của tôi</h1>
+        <p>Quản lý và xem lại các vé xem phim của bạn</p>
+      </div>
+
+      <div class="tickets-tabs">
+        <button type="button" class="tickets-tab active" data-ticket-filter="all">Tất cả</button>
+        <button type="button" class="tickets-tab" data-ticket-filter="upcoming">Sắp chiếu</button>
+        <button type="button" class="tickets-tab" data-ticket-filter="used">Đã sử dụng</button>
+        <button type="button" class="tickets-tab" data-ticket-filter="cancelled">Đã hủy</button>
+      </div>
+
+      <div id="tickets-list" class="tickets-list"></div>
+      <div id="tickets-empty" class="tickets-empty" hidden>
+        <span>🎟️</span>
+        <h3>Chưa có vé xem phim</h3>
+        <p>Vé của bạn sẽ xuất hiện tại đây sau khi đặt vé thành công.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+
+<!-- ================= LỊCH SỬ ĐẶT VÉ ================= -->
+<div id="view-booking-history" class="role-view">
+  <main class="history-page">
+    <header class="history-header">
+      <button type="button" class="history-back" id="history-back">← Quay lại</button>
+      <a href="#" class="history-brand">♛ VIE<span>CENT</span></a>
+    </header>
+
+    <section class="history-content">
+      <div class="history-heading">
+        <span class="history-eyebrow">VIECENT MEMBER</span>
+        <h1>Lịch sử đặt vé</h1>
+        <p>Theo dõi các đơn đặt vé xem phim của bạn</p>
+      </div>
+
+      <div class="history-summary">
+        <div class="history-summary-card">
+          <span>Tổng đơn đặt</span>
+          <strong id="history-total">0</strong>
+        </div>
+        <div class="history-summary-card">
+          <span>Đã hoàn thành</span>
+          <strong id="history-completed">0</strong>
+        </div>
+        <div class="history-summary-card">
+          <span>Đã hủy</span>
+          <strong id="history-cancelled">0</strong>
+        </div>
+      </div>
+
+      <div class="history-toolbar">
+        <input type="search" id="history-search" placeholder="Tìm theo mã đơn hoặc tên phim...">
+        <select id="history-filter">
+          <option value="all">Tất cả trạng thái</option>
+          <option value="completed">Hoàn thành</option>
+          <option value="pending">Chờ xác nhận</option>
+          <option value="cancelled">Đã hủy</option>
+        </select>
+      </div>
+
+      <div class="history-table-wrap">
+        <table class="history-table">
+          <thead>
+          <tr>
+            <th>Mã đơn</th>
+            <th>Phim</th>
+            <th>Ngày đặt</th>
+            <th>Số vé</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody id="history-table-body"></tbody>
+        </table>
+      </div>
+
+      <div class="history-mobile-list" id="history-mobile-list"></div>
+
+      <div class="history-empty" id="history-empty" hidden>
+        <span>📜</span>
+        <h3>Không tìm thấy lịch sử đặt vé</h3>
+        <p>Các đơn đặt vé của bạn sẽ xuất hiện tại đây.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="history-modal" id="history-modal" hidden>
+  <div class="history-modal-card" role="dialog" aria-modal="true" aria-labelledby="history-modal-title">
+    <button type="button" class="history-modal-close" id="history-modal-close" aria-label="Đóng">×</button>
+    <h2 id="history-modal-title">Chi tiết đơn đặt vé</h2>
+    <div id="history-modal-content"></div>
+  </div>
+</div>
+
+
+<!-- ================= ƯU ĐÃI CỦA TÔI ================= -->
+<div id="view-promotions" class="role-view">
+  <main class="promo-page">
+    <header class="promo-header">
+      <button type="button" class="promo-back" id="promo-back">← Quay lại</button>
+      <a href="#" class="promo-brand">♛ VIE<span>CENT</span></a>
+    </header>
+
+    <section class="promo-content">
+      <div class="promo-heading">
+        <span class="promo-eyebrow">VIECENT MEMBER</span>
+        <h1>Ưu đãi của tôi</h1>
+        <p>Khám phá ưu đãi và tiết kiệm cho những buổi xem phim tiếp theo.</p>
+      </div>
+
+      <div class="promo-summary">
+        <div><span>Tổng ưu đãi</span><strong id="promo-total">0</strong></div>
+        <div><span>Còn hiệu lực</span><strong id="promo-valid">0</strong></div>
+        <div><span>Đã sử dụng</span><strong id="promo-used">0</strong></div>
+      </div>
+
+      <div class="promo-tabs">
+        <button type="button" class="promo-tab active" data-promo-filter="all">Tất cả</button>
+        <button type="button" class="promo-tab" data-promo-filter="valid">Còn hiệu lực</button>
+        <button type="button" class="promo-tab" data-promo-filter="used">Đã sử dụng</button>
+        <button type="button" class="promo-tab" data-promo-filter="expired">Hết hạn</button>
+      </div>
+
+      <div id="promo-list" class="promo-list"></div>
+
+      <div id="promo-empty" class="promo-empty" hidden>
+        <span>🎁</span>
+        <h3>Không có ưu đãi</h3>
+        <p>Các ưu đãi phù hợp sẽ xuất hiện tại đây.</p>
+      </div>
+
+      <p id="promo-message" class="promo-message" role="status"></p>
+    </section>
+  </main>
+</div>
+
+
+<div id="view-favorites" class="role-view">
+  <main class="favorite-page">
+    <header class="favorite-header">
+      <button type="button" class="favorite-back" id="favorites-back">← Quay lại</button>
+      <a href="#" class="favorite-brand">♛ VIE<span>CENT</span></a>
+    </header>
+
+    <section class="favorite-content">
+      <div class="favorite-heading">
+        <span class="favorite-eyebrow">VIECENT MEMBER</span>
+        <h1>Phim yêu thích</h1>
+        <p>Lưu lại những bộ phim bạn muốn xem và dễ dàng tìm lại khi cần.</p>
+      </div>
+
+      <div class="favorite-toolbar">
+        <div class="favorite-search-wrap">
+          <span>⌕</span>
+          <input type="search" id="favorite-search" placeholder="Tìm phim yêu thích...">
+        </div>
+        <div class="favorite-tabs">
+          <button type="button" class="favorite-tab active" data-favorite-filter="all">Tất cả</button>
+          <button type="button" class="favorite-tab" data-favorite-filter="now">Đang chiếu</button>
+          <button type="button" class="favorite-tab" data-favorite-filter="coming">Sắp chiếu</button>
+        </div>
+      </div>
+
+      <div id="favorite-count" class="favorite-count">0 phim yêu thích</div>
+      <div id="favorite-list" class="favorite-list"></div>
+
+      <div id="favorite-empty" class="favorite-empty" hidden>
+        <span class="favorite-empty-icon">♡</span>
+        <h3>Chưa có phim yêu thích</h3>
+        <p>Hãy thêm những bộ phim bạn quan tâm vào danh sách yêu thích.</p>
+      </div>
+
+      <p id="favorite-message" class="favorite-message" role="status"></p>
+    </section>
+  </main>
+</div>
+
+
+<div id="view-notifications" class="role-view">
+  <main class="notification-page">
+    <header class="notification-header">
+      <button type="button" class="notification-back" id="notifications-back">← Quay lại</button>
+      <a href="#" class="notification-brand">♛ VIE<span>CENT</span></a>
+    </header>
+
+    <section class="notification-content">
+      <div class="notification-heading">
+        <span class="notification-eyebrow">VIECENT MEMBER</span>
+        <h1>Thông báo</h1>
+        <p>Cập nhật thông tin vé, ưu đãi và những hoạt động mới nhất của bạn.</p>
+      </div>
+
+      <div class="notification-summary">
+        <div><span>Tổng thông báo</span><strong id="notification-total">0</strong></div>
+        <div><span>Chưa đọc</span><strong id="notification-unread">0</strong></div>
+      </div>
+
+      <div class="notification-toolbar">
+        <div class="notification-tabs">
+          <button type="button" class="notification-tab active" data-notification-filter="all">Tất cả</button>
+          <button type="button" class="notification-tab" data-notification-filter="unread">Chưa đọc</button>
+          <button type="button" class="notification-tab" data-notification-filter="read">Đã đọc</button>
+        </div>
+        <button type="button" class="notification-read-all" id="notification-read-all">✓ Đánh dấu tất cả đã đọc</button>
+      </div>
+
+      <div id="notification-list" class="notification-list"></div>
+
+      <div id="notification-empty" class="notification-empty" hidden>
+        <span>♧</span>
+        <h3>Không có thông báo</h3>
+        <p>Các thông báo phù hợp sẽ hiển thị tại đây.</p>
+      </div>
+
+      <p id="notification-message" class="notification-message" role="status"></p>
+    </section>
+  </main>
+</div>
+
+
+<div id="view-settings" class="role-view">
+  <main class="settings-page">
+    <header class="settings-header">
+      <button type="button" class="settings-back" id="settings-back">← Quay lại</button>
+      <a href="#" class="settings-brand">♛ VIE<span>CENT</span></a>
+    </header>
+
+    <section class="settings-content">
+      <div class="settings-heading">
+        <span class="settings-eyebrow">VIECENT MEMBER</span>
+        <h1>Cài đặt</h1>
+        <p>Tùy chỉnh trải nghiệm VIECENT theo sở thích của bạn.</p>
+      </div>
+
+      <form id="settings-form" class="settings-form">
+        <section class="settings-section">
+          <div class="settings-section-heading">
+            <span class="settings-section-icon">◐</span>
+            <div>
+              <h2>Giao diện</h2>
+              <p>Chọn giao diện phù hợp với bạn.</p>
+            </div>
+          </div>
+
+          <div class="settings-option">
+            <div>
+              <strong>Chế độ hiển thị</strong>
+              <p>Thay đổi màu sắc của trang cài đặt.</p>
+            </div>
+            <select id="settings-theme" name="theme">
+              <option value="dark">Tối</option>
+              <option value="light">Sáng</option>
+              <option value="system">Theo hệ thống</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <div class="settings-section-heading">
+            <span class="settings-section-icon">文</span>
+            <div>
+              <h2>Ngôn ngữ</h2>
+              <p>Chọn ngôn ngữ hiển thị mong muốn.</p>
+            </div>
+          </div>
+
+          <div class="settings-option">
+            <div>
+              <strong>Ngôn ngữ hiển thị</strong>
+              <p>Ngôn ngữ được chọn cho tài khoản.</p>
+            </div>
+            <select id="settings-language" name="language">
+              <option value="vi">Tiếng Việt</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <div class="settings-section-heading">
+            <span class="settings-section-icon">♧</span>
+            <div>
+              <h2>Thông báo</h2>
+              <p>Quản lý những nội dung bạn muốn nhận.</p>
+            </div>
+          </div>
+
+          <label class="settings-option">
+            <span>
+              <strong>Thông báo ưu đãi</strong>
+              <p>Nhận thông tin về mã giảm giá và chương trình khuyến mãi.</p>
+            </span>
+            <input type="checkbox" id="settings-promotions" name="promotions" checked>
+          </label>
+
+          <label class="settings-option">
+            <span>
+              <strong>Thông tin phim mới</strong>
+              <p>Cập nhật phim mới và lịch chiếu đáng chú ý.</p>
+            </span>
+            <input type="checkbox" id="settings-new-movies" name="newMovies" checked>
+          </label>
+
+          <label class="settings-option">
+            <span>
+              <strong>Cập nhật đặt vé</strong>
+              <p>Nhận thông tin liên quan đến vé và đơn đặt chỗ.</p>
+            </span>
+            <input type="checkbox" id="settings-bookings" name="bookings" checked>
+          </label>
+        </section>
+
+        <div class="settings-actions">
+          <button type="button" class="settings-reset" id="settings-reset">Khôi phục mặc định</button>
+          <button type="submit" class="settings-save">Lưu cài đặt</button>
+        </div>
+
+        <p id="settings-message" class="settings-message" role="status"></p>
+      </form>
+    </section>
+  </main>
+</div>
+
+
+<div id="view-help" class="role-view">
+  <main class="help-page">
+    <header class="help-header">
+      <button type="button" class="help-back" id="help-back">← Quay lại</button>
+      <a href="#" class="help-brand">♛ VIE<span>CENT</span></a>
+    </header>
+
+    <section class="help-hero">
+      <span class="help-eyebrow">VIECENT SUPPORT</span>
+      <h1>Chúng tôi có thể giúp gì cho bạn?</h1>
+      <p>Tìm câu trả lời hoặc xem hướng dẫn sử dụng dịch vụ VIECENT.</p>
+      <div class="help-search">
+        <span>⌕</span>
+        <input type="search" id="help-search" placeholder="Tìm câu hỏi, ví dụ: cách đặt vé...">
+      </div>
+    </section>
+
+    <section class="help-content">
+      <div class="help-section-heading">
+        <div>
+          <span class="help-eyebrow">FAQ</span>
+          <h2>Câu hỏi thường gặp</h2>
+        </div>
+        <span id="help-result-count" class="help-result-count"></span>
+      </div>
+
+      <div class="help-categories">
+        <button type="button" class="help-category active" data-help-category="all">Tất cả</button>
+        <button type="button" class="help-category" data-help-category="booking">Đặt vé</button>
+        <button type="button" class="help-category" data-help-category="payment">Thanh toán</button>
+        <button type="button" class="help-category" data-help-category="account">Tài khoản</button>
+        <button type="button" class="help-category" data-help-category="promotion">Ưu đãi</button>
+      </div>
+
+      <div id="help-faq-list" class="help-faq-list"></div>
+
+      <div id="help-empty" class="help-empty" hidden>
+        <span>⌕</span>
+        <h3>Không tìm thấy câu hỏi phù hợp</h3>
+        <p>Hãy thử từ khóa khác hoặc chọn danh mục Tất cả.</p>
+      </div>
+
+      <section class="help-guide">
+        <span class="help-eyebrow">HƯỚNG DẪN</span>
+        <h2>Các bước đặt vé tại VIECENT</h2>
+        <div class="help-guide-grid">
+          <article class="help-guide-card">
+            <span>01</span>
+            <h3>Chọn phim</h3>
+            <p>Tìm phim bạn muốn xem và mở thông tin chi tiết.</p>
+          </article>
+          <article class="help-guide-card">
+            <span>02</span>
+            <h3>Chọn suất chiếu</h3>
+            <p>Chọn rạp, ngày chiếu và khung giờ phù hợp.</p>
+          </article>
+          <article class="help-guide-card">
+            <span>03</span>
+            <h3>Chọn ghế</h3>
+            <p>Chọn vị trí ghế còn trống theo sơ đồ phòng chiếu.</p>
+          </article>
+          <article class="help-guide-card">
+            <span>04</span>
+            <h3>Xác nhận đặt vé</h3>
+            <p>Kiểm tra thông tin và thực hiện các bước thanh toán được hiển thị.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="help-contact">
+        <div>
+          <span class="help-eyebrow">CONTACT SUPPORT</span>
+          <h2>Bạn vẫn cần hỗ trợ?</h2>
+          <p>Hãy liên hệ qua kênh hỗ trợ chính thức do VIECENT cung cấp.</p>
+        </div>
+        <a class="help-contact-button" href="mailto:support@viecent.example">Liên hệ hỗ trợ ↗</a>
+      </section>
+
+      <p id="help-message" class="help-message" role="status"></p>
+    </section>
+  </main>
+</div>
+
+<div id="view-staff" class="role-view">
+  <div class="pos-container">
+    <header class="pos-header">
+      <div class="pos-title"><h2>VIECENT POS</h2><span class="pos-badge">Quầy vé 03 · Vincom Q1</span></div>
+      <div class="pos-user">Thu ngân: Nguyễn Văn A (#883)</div>
+    </header>
+    <div class="pos3">
+      <section class="pos-col"><h3>1. Suất chiếu</h3><div class="pos-shows" id="pos-shows"></div></section>
+      <section class="pos-col"><h3>2. Chọn ghế <small id="pos-room"></small></h3><div class="seat-matrix pos-seatmap" id="pos-seats"></div>
+        <div class="seat-legend small"><div class="legend-item"><span class="seat-sample standard"></span>Thường</div><div class="legend-item"><span class="seat-sample vip"></span>VIP</div><div class="legend-item"><span class="seat-sample couple"></span>Đôi</div><div class="legend-item"><span class="seat-sample sold"></span>Đã bán</div></div>
+      </section>
+      <section class="pos-col pos-order"><h3>3. Đơn hàng <span class="pos-state" id="pos-state">Sẵn sàng</span></h3>
+        <div class="pos-lines" id="pos-lines"></div>
+        <div class="pos-combos" id="pos-combos"></div>
+        <div class="pos-input-group"><label for="pos-phone">SĐT khách (thẻ thành viên, thử 0908123456 hoặc 0912345678)</label><input type="tel" class="pos-input" id="pos-phone" inputmode="numeric" maxlength="10" placeholder="09xxxxxxxx"><span class="pos-member" id="pos-member"></span></div>
+        <div class="pos-input-group"><label for="pos-promo">Khuyến mãi</label><select class="pos-input" id="pos-promo"></select></div>
+        <div class="pos-total"><span>Tổng</span><strong id="pos-total">0đ</strong></div>
+        <div class="pos-pay-buttons"><button class="btn-pos-pay cash" data-m="Tiền mặt">TIỀN MẶT</button><button class="btn-pos-pay vnpay" data-m="VNPay QR">VNPAY QR</button><button class="btn-pos-pay momo" data-m="MoMo">MOMO</button></div>
+        <button class="btn-back pos-cancel" id="pos-cancel">Hủy giao dịch, trả ghế</button>
+        <p class="pos-status" id="pos-status" role="status"></p>
+        <div class="pos-ticket" id="pos-ticket" hidden></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+<div id="view-admin" class="role-view">
+  <div class="adm-layout">
+    <aside class="adm-sidebar">
+      <div class="adm-brand">VIECENT <span>ADMIN</span></div>
+      <nav class="adm-menu" id="adm-menu">
+        <a href="#" class="adm-item active" data-v="dash">Tổng quan</a>
+        <a href="#" class="adm-item" data-v="movies">Phim và suất chiếu</a>
+        <a href="#" class="adm-item" data-v="cinemas">Rạp và phòng chiếu</a>
+        <a href="#" class="adm-item" data-v="combos">Combo bắp nước</a>
+        <a href="#" class="adm-item" data-v="promos">Khuyến mãi</a>
+        <a href="#" class="adm-item" data-v="customers">Khách hàng</a>
+        <a href="#" class="adm-item" data-v="orders">Đơn hàng và vé</a>
+        <a href="#" class="adm-item" data-v="staff">Nhân sự</a>
+      </nav>
+    </aside>
+    <main class="adm-main">
+      <header class="adm-header"><h2 id="adm-title"></h2><div class="adm-tools" id="adm-tools"></div></header>
+      <div id="adm-content"></div>
+    </main>
+  </div>
+</div>
+
+<div id="adm-dialog" class="adm-dialog" hidden></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="scriptcnm.js"></script>
+</body>
+</html>
