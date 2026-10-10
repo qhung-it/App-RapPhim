@@ -1,6 +1,5 @@
 package com.example.studentapp.apprapphim.model.entity;
 
-import com.example.studentapp.apprapphim.model.Enum.LoaiGiam;
 import com.example.studentapp.apprapphim.model.Enum.TrangThaiKhuyenMai;
 import jakarta.persistence.*;
 
