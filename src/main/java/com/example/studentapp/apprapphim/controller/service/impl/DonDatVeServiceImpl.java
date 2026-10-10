@@ -368,7 +368,7 @@ public class DonDatVeServiceImpl implements DonDatVeService {
         }
 
         if (suat.getTrangThai() == TrangThaiSuatChieu.Huy
-                || suat.getTrangThai() == TrangThaiSuatChieu.DaChieu) {
+                || suat.getTrangThai() == TrangThaiSuatChieu.DaKetThuc) {
             return false;
         }
 

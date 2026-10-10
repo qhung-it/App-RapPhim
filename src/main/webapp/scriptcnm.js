@@ -1273,7 +1273,7 @@ function initMyPromotions() {
   const customerView = $('#view-customer');
   const openButton = $('#my-promotions');
   const backButton = $('#promo-back');
-  const list = $('#promo-list');
+  const list = $('#my-promo-list');
   const empty = $('#promo-empty');
   const message = $('#promo-message');
 
